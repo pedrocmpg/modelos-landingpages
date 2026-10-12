@@ -29,9 +29,8 @@ export function useLenis() {
       const alvo = document.querySelector<HTMLElement>(id);
       if (!alvo) return;
       e.preventDefault();
-      const header = document.querySelector("header");
-      const offset = -(header?.getBoundingClientRect().height ?? 0);
-      lenis.scrollTo(alvo, { offset });
+      // O Lenis já respeita o scroll-margin-top das seções (altura do header).
+      lenis.scrollTo(alvo);
       alvo.focus({ preventScroll: true });
     }
     document.addEventListener("click", aoClicar);
