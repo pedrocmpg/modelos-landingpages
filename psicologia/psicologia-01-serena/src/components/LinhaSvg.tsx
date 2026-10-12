@@ -6,14 +6,14 @@ import "./LinhaSvg.css";
 // Pontos por onde a linha "desenhada à mão" passa (x em 0-100, y em 0-1000).
 // Zigue-zague suave de uma borda à outra, com pequenas irregularidades.
 const PONTOS: [number, number][] = [
-  [86, 0],
-  [14, 120],
-  [90, 255],
-  [9, 380],
-  [84, 505],
-  [15, 640],
-  [91, 770],
-  [11, 885],
+  [94, 0],
+  [5, 120],
+  [96, 255],
+  [4, 380],
+  [93, 505],
+  [6, 640],
+  [97, 770],
+  [5, 885],
   [60, 1000],
 ];
 

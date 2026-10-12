@@ -9,7 +9,7 @@
   --cor-borda: color-mix(in srgb, var(--cor-texto) 11%, transparent);
   --cor-sombra: color-mix(in srgb, var(--cor-texto) 16%, transparent);
   --cor-texto-escuro-atenuado: color-mix(in srgb, var(--cor-fundo) 78%, var(--cor-escuro));
-  --cor-linha: color-mix(in srgb, var(--cor-primaria) 70%, transparent);
+  --cor-linha: color-mix(in srgb, var(--cor-primaria) 55%, transparent);
 
   --altura-header: 72px;
   --espaco-secao: clamp(72px, 11vw, 144px);
