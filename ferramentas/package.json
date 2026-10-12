@@ -5,7 +5,9 @@
   "type": "module",
   "description": "Scripts da raiz: capturas do hero, og-image.png dos modelos e vitrine. Fora dos modelos, que continuam independentes.",
   "scripts": {
-    "og": "node gerar-og.mjs"
+    "og": "node gerar-og.mjs",
+    "vitrine": "node gerar-vitrine.mjs",
+    "test": "node --test"
   },
   "dependencies": {
     "playwright-core": "^1.64.0",

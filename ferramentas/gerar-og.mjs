@@ -2,8 +2,9 @@
 //   <modelo>/public/og-image.png     1200x630, < 300 KB, com o título do cartão (meta.ogTitle)
 //   vitrine/capturas/<modelo>.jpg    captura limpa do hero, para a vitrine
 //
-// Uso (na pasta ferramentas/):  node gerar-og.mjs [filtro]
+// Uso (na pasta ferramentas/):  node gerar-og.mjs [filtro] [--so-vitrine]
 //   ex.: node gerar-og.mjs fisioterapia-02
+//   --so-vitrine refaz só as capturas da vitrine e deixa os og-image.png como estão.
 // Chrome: CHROME_PATH ou o caminho padrão do Windows abaixo.
 // Os dados são só os do config (fictícios): nada é capturado de sites reais.
 
@@ -104,7 +105,9 @@ async function abrir(browser, url, largura, altura) {
   return { pagina, contexto };
 }
 
-const filtro = process.argv[2];
+const args = process.argv.slice(2);
+const soVitrine = args.includes("--so-vitrine");
+const filtro = args.find((a) => !a.startsWith("--"));
 const modelos = await listarModelos(filtro);
 if (modelos.length === 0) {
   console.error(`nenhum modelo encontrado${filtro ? ` para "${filtro}"` : ""}`);
@@ -121,21 +124,25 @@ try {
     const { servidor, url } = await servir(dist);
     try {
       // Cartão de compartilhamento: 1200x630 com o título.
-      const og = await abrir(browser, url, 1200, 630);
-      await og.pagina.evaluate(inserirFaixa, m.config.meta.ogTitle);
-      const bruto = await og.pagina.screenshot({ type: "png" });
-      await og.contexto.close();
-      const { png, cores } = await comprimirPng(bruto);
-      writeFileSync(join(m.pasta, "public", "og-image.png"), png);
+      let resumoOg = "og-image.png mantido (--so-vitrine)";
+      if (!soVitrine) {
+        const og = await abrir(browser, url, 1200, 630);
+        await og.pagina.evaluate(inserirFaixa, m.config.meta.ogTitle);
+        const bruto = await og.pagina.screenshot({ type: "png" });
+        await og.contexto.close();
+        const { png, cores } = await comprimirPng(bruto);
+        writeFileSync(join(m.pasta, "public", "og-image.png"), png);
+        resumoOg = `og-image.png ${(png.length / 1024).toFixed(0)} KB (${cores} cores, limite ${LIMITE_OG / 1024} KB)`;
+      }
 
-      // Captura limpa do hero para a vitrine (1440x900 -> 960x600).
-      const vit = await abrir(browser, url, 1440, 900);
+      // Captura limpa do hero para a vitrine (1100x688 -> 960x600: o texto continua legivel).
+      const vit = await abrir(browser, url, 1100, 688);
       const limpa = await vit.pagina.screenshot({ type: "png" });
       await vit.contexto.close();
       const jpg = await sharp(limpa).resize(960, 600).jpeg({ quality: 80, mozjpeg: true }).toBuffer();
       writeFileSync(join(SAIDA_VITRINE, `${m.id}.jpg`), jpg);
 
-      console.log(`og-image.png ${(png.length / 1024).toFixed(0)} KB (${cores} cores, limite ${LIMITE_OG / 1024} KB); vitrine ${(jpg.length / 1024).toFixed(0)} KB`);
+      console.log(`${resumoOg}; vitrine ${(jpg.length / 1024).toFixed(0)} KB`);
     } finally {
       servidor.close();
     }
