@@ -1,0 +1,18 @@
+.trajetoria {
+  position: absolute;
+  inset: 90svh 0 0;
+  z-index: 1;
+  width: 100%;
+  height: calc(100% - 90svh);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.trajetoria__tracado {
+  fill: none;
+  stroke: color-mix(in srgb, var(--cor-primaria) 38%, transparent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}

@@ -1,0 +1,111 @@
+.passos {
+  position: relative;
+}
+
+.passos__lista {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(24px, 4vw, 56px);
+}
+
+/* Fio que liga as três etapas: se estica com transform quando a lista entra na tela. */
+.passos__linha {
+  position: absolute;
+  top: 36px;
+  left: calc(100% / 6);
+  right: calc(100% / 6);
+  height: 2px;
+  background: var(--cor-linha);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.8s var(--ease-in-out) 0.3s;
+}
+
+.passos--ativo .passos__linha {
+  transform: scaleX(1);
+}
+
+.passo {
+  position: relative;
+  text-align: center;
+}
+
+.passo__marca {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 20px;
+  border: 2px solid var(--cor-suave);
+  border-radius: 50%;
+  background: var(--cor-escuro);
+  color: var(--cor-suave);
+  font-family: var(--fonte-titulo);
+  font-size: 26px;
+}
+
+.passo__numero {
+  margin-bottom: 8px;
+  color: var(--cor-suave);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.passo h3 {
+  color: var(--cor-fundo);
+  font-size: clamp(24px, 2.6vw, 30px);
+}
+
+.passo__texto {
+  max-width: 34ch;
+  margin: 12px auto 0;
+  color: var(--cor-texto-escuro-atenuado);
+}
+
+.passos__observacao {
+  max-width: 60ch;
+  margin-top: clamp(32px, 5vw, 56px);
+  color: var(--cor-texto-escuro-atenuado);
+  font-size: 15.5px;
+}
+
+@media (max-width: 800px) {
+  .passos__lista {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .passos__linha {
+    top: 36px;
+    bottom: 36px;
+    left: 35px;
+    right: auto;
+    width: 2px;
+    height: auto;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+
+  .passos--ativo .passos__linha {
+    transform: scaleY(1);
+  }
+
+  .passo {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    column-gap: 20px;
+    text-align: left;
+  }
+
+  .passo__marca {
+    grid-row: 1 / span 3;
+    margin-bottom: 0;
+  }
+
+  .passo__texto {
+    margin: 8px 0 0;
+  }
+}

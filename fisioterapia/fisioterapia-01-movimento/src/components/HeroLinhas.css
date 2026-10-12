@@ -1,0 +1,55 @@
+.hero-linhas {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* stroke-dashoffset é a técnica de "desenhar" o traço: a única exceção à regra
+   "só transform/opacity", usada só nestas poucas linhas do hero. */
+.hero-linhas path,
+.hero-linhas circle {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: hero-desenhar 2.2s var(--ease-in-out) var(--atraso, 0s) forwards;
+}
+
+/* Contorno claro sob a trajetória: ela cruza a foto e precisa de contraste. */
+.hero-linhas__contorno {
+  stroke: var(--cor-superficie);
+  stroke-width: 7;
+}
+
+.hero-linhas__trajetoria {
+  stroke: var(--cor-destaque);
+  stroke-width: 3;
+}
+
+.hero-linhas__ponto {
+  stroke: var(--cor-destaque);
+  stroke-width: 3;
+  fill: var(--cor-superficie) !important;
+  animation-duration: 0.9s !important;
+}
+
+.hero-linhas__coluna {
+  stroke: var(--cor-primaria);
+  stroke-width: 2;
+}
+
+.hero-linhas__vertebra {
+  stroke: var(--cor-primaria);
+  stroke-width: 2;
+  animation-duration: 0.8s !important;
+}
+
+@keyframes hero-desenhar {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

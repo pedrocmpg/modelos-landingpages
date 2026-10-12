@@ -1,0 +1,75 @@
+.hero {
+  position: relative;
+  padding: calc(var(--altura-header) + clamp(28px, 6vw, 72px)) 0 clamp(56px, 9vw, 112px);
+  overflow-x: clip;
+  scroll-margin-top: 0;
+}
+
+.hero__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(32px, 6vw, 88px);
+  align-items: center;
+}
+
+.hero__selo {
+  display: inline-block;
+  margin-bottom: 24px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: var(--cor-suave);
+  color: var(--cor-secundaria);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.hero__titulo {
+  font-size: clamp(42px, 6vw, 76px);
+  line-height: 1.02;
+}
+
+.hero__subtitulo {
+  max-width: 46ch;
+  margin-top: 26px;
+  color: var(--cor-texto-secundario);
+  font-size: clamp(18px, 1.7vw, 21px);
+}
+
+.hero__acoes {
+  margin-top: 36px;
+}
+
+.hero__visual {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  margin-left: auto;
+}
+
+/* As linhas ocupam o quadro todo: a coluna na faixa livre à esquerda, a trajetória por cima da foto. */
+.hero__visual .hero-linhas {
+  inset: -9% 0;
+  width: 100%;
+  height: 118%;
+}
+
+.hero__foto {
+  position: relative;
+  z-index: 2;
+  width: 74%;
+  margin-left: auto;
+}
+
+@media (max-width: 900px) {
+  .hero__grade {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__visual {
+    max-width: 440px;
+    margin: 12px auto 0;
+  }
+}

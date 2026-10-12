@@ -1,0 +1,33 @@
+.ambientes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 40px);
+}
+
+.ambiente h3 {
+  margin-top: 20px;
+  font-size: clamp(22px, 2.4vw, 28px);
+}
+
+.ambiente p {
+  margin-top: 8px;
+  color: var(--cor-texto-secundario);
+}
+
+.ambientes__observacao {
+  margin-top: 32px;
+  color: var(--cor-texto-secundario);
+  font-size: 15.5px;
+}
+
+@media (max-width: 900px) {
+  .ambientes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .ambientes {
+    grid-template-columns: 1fr;
+  }
+}
