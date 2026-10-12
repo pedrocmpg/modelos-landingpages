@@ -77,7 +77,7 @@ cores e fontes) e confere que nada do config principal sobrou na página.
 | `meta.title` | texto | `<title>` e `og:title`. |
 | `meta.description` | texto | Meta description e `og:description`. |
 | `meta.lang` | texto | Idioma do site (ex.: `pt-BR`). |
-| `meta.noindex` | `true`/`false` | `true` = demo: `<meta robots noindex>` e `robots.txt` bloqueando tudo. Troque para `false` ao entregar. |
+| `meta.noindex` | `true`/`false` | `true` = demo: `<meta robots noindex, nofollow>`. O `robots.txt` sempre libera os rastreadores (assim o noindex e o cartão de compartilhamento são lidos). Troque para `false` ao entregar. |
 | `meta.url` | texto, opcional | URL final (usada em `og:url` e para tornar absoluta a imagem do Open Graph). |
 | `negocio.nome` | texto | Nome do profissional (cabeçalho, rodapé, Open Graph). |
 | `negocio.slogan` | texto | Frase curta no rodapé. |

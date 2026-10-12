@@ -81,16 +81,22 @@ describe("tema", () => {
 });
 
 describe("head e robots", () => {
-  it("noindex true: meta robots e robots.txt bloqueiam tudo", () => {
+  it("noindex true: o <meta robots> bloqueia a indexação e o robots.txt libera os rastreadores", () => {
     expect(siteConfig.meta.noindex).toBe(true);
     expect(renderHeadTags(siteConfig)).toContain('<meta name="robots" content="noindex, nofollow" />');
-    expect(robotsTxt(siteConfig)).toContain("Disallow: /");
+    expect(robotsTxt(siteConfig)).toBe("User-agent: *\nAllow: /\n");
   });
 
-  it("noindex false: sem meta robots e robots.txt liberando", () => {
+  it("noindex false: sem <meta robots>", () => {
+    expect(altConfig.meta.noindex).toBe(false);
     expect(renderHeadTags(altConfig)).not.toContain('name="robots"');
-    expect(robotsTxt(altConfig)).toContain("Allow: /");
-    expect(robotsTxt(altConfig)).not.toContain("Disallow");
+  });
+
+  it.each(configs)("config %s: robots.txt libera todos os rastreadores, com noindex ligado ou não", (_nome, config) => {
+    const robots = robotsTxt(config);
+    expect(robots).toContain("User-agent: *");
+    expect(robots).toContain("Allow: /");
+    expect(robots).not.toMatch(/Disallow/i);
   });
 
   it("gera título, descrição e Open Graph do config", () => {

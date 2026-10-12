@@ -103,10 +103,13 @@ export function renderNoscript(config: SiteConfig): string {
   return `<noscript><main style="max-width:640px;margin:0 auto;padding:40px 20px;font-family:var(--fonte-texto);color:var(--cor-texto);line-height:1.6">${partes.join("")}</main></noscript>`;
 }
 
-export function robotsTxt(config: SiteConfig): string {
-  return config.meta.noindex
-    ? "# Site de demonstração: bloqueia todos os buscadores.\nUser-agent: *\nDisallow: /\n"
-    : "User-agent: *\nAllow: /\n";
+/**
+ * Sempre libera os rastreadores: quem bloqueia a indexação é o <meta robots>
+ * (meta.noindex). Com Disallow, os robôs nem leriam o noindex nem o cartão
+ * Open Graph que o WhatsApp, o LinkedIn e a Meta buscam ao colar o link.
+ */
+export function robotsTxt(_config: SiteConfig): string {
+  return "User-agent: *\nAllow: /\n";
 }
 
 /** Aplica o resultado de renderHeadTags/renderNoscript ao index.html. */

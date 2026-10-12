@@ -46,7 +46,7 @@ export interface Meta {
   description: string;
   /** Idioma do documento, ex.: "pt-BR". */
   lang: string;
-  /** true = <meta robots noindex> + robots.txt bloqueando tudo (demo). */
+  /** true = <meta robots noindex, nofollow> (demo). O robots.txt sempre libera os rastreadores. */
   noindex: boolean;
   /** URL pública final do site, com https:// e barra final. Base de og:url e da imagem. */
   url: string;

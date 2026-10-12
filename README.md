@@ -51,7 +51,7 @@ vão para Cloudflare Pages ou Netlify.
   removidos (`exemplo: true` → apagar). Favicon (`public/favicon.svg`) trocado.
 - [ ] **Depoimentos e nota reais** (ou bloco removido; em psicologia não há depoimentos) e
   mapa do endereço certo.
-- [ ] **`noindex` removido**: `meta.noindex: false` (isso também libera o `robots.txt`) e
+- [ ] **`noindex` removido**: `meta.noindex: false` (tira o `<meta robots>`; o `robots.txt` já libera os rastreadores) e
   `meta.url` com o domínio final.
 - [ ] **Domínio** apontado no provedor de hospedagem (DNS) e HTTPS ativo.
 - [ ] **Deploy** feito com `npm run build` → `dist/`, link do WhatsApp testado no celular.
