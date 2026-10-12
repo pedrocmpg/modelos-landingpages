@@ -16,6 +16,13 @@ const siteConfig: SiteConfig = {
       "Psicoterapia para adultos, presencial e online, em um ambiente acolhedor e com sigilo. Conheça o trabalho e veja como funciona o primeiro contato.",
     lang: "pt-BR",
     noindex: true,
+    // Cartão de compartilhamento (WhatsApp, Instagram, LinkedIn, X). Gerado no build.
+    url: "https://modelo-psicologia-02-acolher.vercel.app/",
+    ogTitle: "Modelo de site para psicologia — exemplo",
+    ogDescription:
+      "Exemplo de landing page para psicologia (estilo Acolher), com dados fictícios. É um modelo de demonstração, não um site real.",
+    ogImage: "/og-image.png",
+    ogImageAlt: "Início do modelo de site para psicologia (estilo Acolher), com o título do cartão: Modelo de site para psicologia — exemplo",
   },
 
   negocio: {
@@ -261,10 +268,6 @@ const siteConfig: SiteConfig = {
       src: "/images/ambiente-poltrona-janela.jpg",
       alt: "Poltrona laranja ao lado de uma janela aberta com vista para árvores, dentro de um nicho em arco",
       exemplo: true,
-    },
-    og: {
-      src: "/images/ambiente-poltrona-janela.jpg",
-      alt: "Poltrona laranja ao lado de uma janela aberta com vista para árvores",
     },
   },
 };

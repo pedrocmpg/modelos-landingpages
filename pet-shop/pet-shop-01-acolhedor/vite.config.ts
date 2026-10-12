@@ -6,7 +6,7 @@ import staticConfig from './src/config/site.config.ts'
 import type { SiteConfig } from './src/config/types.ts'
 
 // Gera o que fica fora do React a partir de src/config/site.config.ts:
-// <head> (título, descrição, noindex, Open Graph, fontes, tema), o resumo
+// <head> (título, descrição, noindex, Open Graph e Twitter, fontes, tema), o resumo
 // <noscript> e o robots.txt. Em dev, relê o config a cada carga da página.
 function siteConfigPlugin(): Plugin {
   let server: ViteDevServer | undefined

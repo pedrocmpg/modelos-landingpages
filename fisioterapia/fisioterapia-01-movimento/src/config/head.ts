@@ -20,17 +20,23 @@ function ogLocale(lang: string): string {
   return lang.replace("-", "_");
 }
 
-function urlAbsoluta(caminho: string, base?: string): string | undefined {
-  if (!base) return undefined;
+/** Largura e altura do cartão de compartilhamento (padrão de og:image). */
+export const OG_LARGURA = 1200;
+export const OG_ALTURA = 630;
+
+/** Resolve a imagem do cartão contra meta.url. Falha alto em vez de omitir a tag. */
+function urlAbsoluta(caminho: string, base: string): string {
   try {
     return new URL(caminho, base).toString();
   } catch {
-    return undefined;
+    throw new Error(
+      `meta.url ("${base}") ou meta.ogImage ("${caminho}") inválido: use uma URL completa, ex.: https://exemplo.com.br/`,
+    );
   }
 }
 
 export function renderHeadTags(config: SiteConfig): string {
-  const { meta, negocio, tema, imagens } = config;
+  const { meta, negocio, tema } = config;
   const e = escapeHtml;
   const tags: string[] = [
     `<title>${e(meta.title)}</title>`,
@@ -42,27 +48,24 @@ export function renderHeadTags(config: SiteConfig): string {
     tags.push(`<meta name="robots" content="noindex, nofollow" />`);
   }
 
+  const imagem = urlAbsoluta(meta.ogImage, meta.url);
   tags.push(
+    `<link rel="canonical" href="${e(meta.url)}" />`,
     `<meta property="og:type" content="website" />`,
     `<meta property="og:site_name" content="${e(negocio.nome)}" />`,
-    `<meta property="og:title" content="${e(meta.title)}" />`,
-    `<meta property="og:description" content="${e(meta.description)}" />`,
+    `<meta property="og:title" content="${e(meta.ogTitle)}" />`,
+    `<meta property="og:description" content="${e(meta.ogDescription)}" />`,
     `<meta property="og:locale" content="${e(ogLocale(meta.lang))}" />`,
-  );
-
-  if (meta.url) {
-    tags.push(`<meta property="og:url" content="${e(meta.url)}" />`);
-  }
-
-  const imagemOg = imagens.og ? urlAbsoluta(imagens.og.src, meta.url) : undefined;
-  if (imagens.og && imagemOg) {
-    tags.push(
-      `<meta property="og:image" content="${e(imagemOg)}" />`,
-      `<meta property="og:image:alt" content="${e(imagens.og.alt)}" />`,
-    );
-  }
-  tags.push(
-    `<meta name="twitter:card" content="${imagemOg ? "summary_large_image" : "summary"}" />`,
+    `<meta property="og:url" content="${e(meta.url)}" />`,
+    `<meta property="og:image" content="${e(imagem)}" />`,
+    `<meta property="og:image:width" content="${OG_LARGURA}" />`,
+    `<meta property="og:image:height" content="${OG_ALTURA}" />`,
+    `<meta property="og:image:alt" content="${e(meta.ogImageAlt)}" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
+    `<meta name="twitter:title" content="${e(meta.ogTitle)}" />`,
+    `<meta name="twitter:description" content="${e(meta.ogDescription)}" />`,
+    `<meta name="twitter:image" content="${e(imagem)}" />`,
+    `<meta name="twitter:image:alt" content="${e(meta.ogImageAlt)}" />`,
   );
 
   tags.push(

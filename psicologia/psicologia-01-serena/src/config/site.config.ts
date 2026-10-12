@@ -16,6 +16,13 @@ const siteConfig: SiteConfig = {
       "Atendimento psicológico para adultos, presencial e online, com escuta cuidadosa e sigilo. Conheça o trabalho e veja como funciona o primeiro contato.",
     lang: "pt-BR",
     noindex: true,
+    // Cartão de compartilhamento (WhatsApp, Instagram, LinkedIn, X). Gerado no build.
+    url: "https://modelo-psicologia-01-serena.vercel.app/",
+    ogTitle: "Modelo de site para psicologia — exemplo",
+    ogDescription:
+      "Exemplo de landing page para psicologia (estilo Serena), com dados fictícios. É um modelo de demonstração, não um site real.",
+    ogImage: "/og-image.png",
+    ogImageAlt: "Início do modelo de site para psicologia (estilo Serena), com o título do cartão: Modelo de site para psicologia — exemplo",
   },
 
   negocio: {
@@ -278,10 +285,6 @@ const siteConfig: SiteConfig = {
       src: "/images/ambiente-folhas-luz.jpg",
       alt: "Folhas verdes iluminadas pela luz da manhã",
       exemplo: true,
-    },
-    og: {
-      src: "/images/ambiente-folhas-luz.jpg",
-      alt: "Folhas verdes iluminadas pela luz da manhã",
     },
   },
 };

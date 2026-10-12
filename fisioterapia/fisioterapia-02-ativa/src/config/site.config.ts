@@ -23,6 +23,13 @@ const siteConfig: SiteConfig = {
       "Fisioterapia ortopédica e esportiva com avaliação detalhada e plano de atendimento. Conheça o consultório e chame pelo WhatsApp.",
     lang: "pt-BR",
     noindex: true,
+    // Cartão de compartilhamento (WhatsApp, Instagram, LinkedIn, X). Gerado no build.
+    url: "https://modelo-fisioterapia-02-ativa.vercel.app/",
+    ogTitle: "Modelo de site para fisioterapia — exemplo",
+    ogDescription:
+      "Exemplo de landing page para fisioterapia (estilo Ativa), com dados fictícios. É um modelo de demonstração, não um site real.",
+    ogImage: "/og-image.png",
+    ogImageAlt: "Início do modelo de site para fisioterapia (estilo Ativa), com o título do cartão: Modelo de site para fisioterapia — exemplo",
   },
 
   negocio: {
@@ -285,10 +292,6 @@ const siteConfig: SiteConfig = {
       src: "/images/anilhas-kettlebells.jpg",
       alt: "Prateleira de aço com kettlebells coloridos e bolas de treino sobre piso emborrachado",
       exemplo: true,
-    },
-    og: {
-      src: "/images/anilhas-kettlebells.jpg",
-      alt: "Prateleira de aço com kettlebells coloridos e bolas de treino sobre piso emborrachado",
     },
   },
 };

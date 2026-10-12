@@ -20,6 +20,13 @@ const siteConfig: SiteConfig = {
       "Fisioterapia ortopédica e funcional com avaliação individual e plano de atendimento. Conheça o consultório e chame pelo WhatsApp.",
     lang: "pt-BR",
     noindex: true,
+    // Cartão de compartilhamento (WhatsApp, Instagram, LinkedIn, X). Gerado no build.
+    url: "https://modelo-fisioterapia-01-movimento.vercel.app/",
+    ogTitle: "Modelo de site para fisioterapia — exemplo",
+    ogDescription:
+      "Exemplo de landing page para fisioterapia (estilo Movimento), com dados fictícios. É um modelo de demonstração, não um site real.",
+    ogImage: "/og-image.png",
+    ogImageAlt: "Início do modelo de site para fisioterapia (estilo Movimento), com o título do cartão: Modelo de site para fisioterapia — exemplo",
   },
 
   negocio: {
@@ -284,10 +291,6 @@ const siteConfig: SiteConfig = {
       src: "/images/pilates-reformer.jpg",
       alt: "Aparelho de pilates com almofadas de apoio ao lado de uma janela com cortinas claras",
       exemplo: true,
-    },
-    og: {
-      src: "/images/pilates-reformer.jpg",
-      alt: "Aparelho de pilates com almofadas de apoio ao lado de uma janela com cortinas claras",
     },
   },
 };

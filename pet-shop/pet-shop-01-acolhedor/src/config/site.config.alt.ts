@@ -11,6 +11,10 @@ export const altConfig: SiteConfig = {
     lang: "pt-BR",
     noindex: false,
     url: "https://teste.example/",
+    ogTitle: "Título alternativo do cartão (teste)",
+    ogDescription: "Descrição alternativa do cartão de compartilhamento (teste).",
+    ogImage: "/images/pet-1-puppy.jpg",
+    ogImageAlt: "Imagem alternativa de compartilhamento",
   },
 
   negocio: {
@@ -197,7 +201,6 @@ export const altConfig: SiteConfig = {
   imagens: {
     hero: { src: "/images/pet-1-puppy.jpg", alt: "Filhote molhado (imagem de teste)" },
     sobre: { src: "/images/pet-2-tongue.jpg", alt: "Cachorro sorridente (imagem de teste)" },
-    og: { src: "/images/pet-1-puppy.jpg", alt: "Imagem de compartilhamento de teste" },
     galeria: [
       { tipo: "foto", imagem: { src: "/images/pet-3-beach.jpg", alt: "Foto de galeria de teste" }, legenda: "Legenda de teste" },
       {

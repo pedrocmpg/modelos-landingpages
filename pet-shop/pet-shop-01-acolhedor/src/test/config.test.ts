@@ -96,11 +96,48 @@ describe("head e robots", () => {
   it("gera título, descrição e Open Graph do config", () => {
     const head = renderHeadTags(altConfig);
     expect(head).toContain("<title>Casa dos Bichos Teste | Estética animal em Vila Modelo</title>");
-    expect(head).toContain('property="og:title"');
-    expect(head).toContain('property="og:description"');
+    expect(head).toContain('property="og:title" content="Título alternativo do cartão (teste)"');
+    expect(head).toContain('property="og:description" content="Descrição alternativa do cartão de compartilhamento (teste)."');
     expect(head).toContain('property="og:url" content="https://teste.example/"');
     expect(head).toContain('property="og:image" content="https://teste.example/images/pet-1-puppy.jpg"');
     expect(head).toContain('name="twitter:card" content="summary_large_image"');
+  });
+
+  it.each(configs)("config %s: Open Graph e Twitter completos, vindos de meta", (_nome, config) => {
+    const head = renderHeadTags(config);
+    const { meta } = config;
+    const imagem = new URL(meta.ogImage, meta.url).toString();
+    const esperadas = [
+      '<meta property="og:type" content="website" />',
+      `<meta property="og:title" content="${meta.ogTitle}" />`,
+      `<meta property="og:description" content="${meta.ogDescription}" />`,
+      `<meta property="og:url" content="${meta.url}" />`,
+      `<meta property="og:image" content="${imagem}" />`,
+      '<meta property="og:image:width" content="1200" />',
+      '<meta property="og:image:height" content="630" />',
+      `<meta property="og:image:alt" content="${meta.ogImageAlt}" />`,
+      '<meta name="twitter:card" content="summary_large_image" />',
+      `<meta name="twitter:title" content="${meta.ogTitle}" />`,
+      `<meta name="twitter:description" content="${meta.ogDescription}" />`,
+      `<meta name="twitter:image" content="${imagem}" />`,
+      `<meta name="twitter:image:alt" content="${meta.ogImageAlt}" />`,
+      `<link rel="canonical" href="${meta.url}" />`,
+    ];
+    for (const tag of esperadas) expect(head).toContain(tag);
+  });
+
+  it("o cartão do config principal segue o padrão \"Modelo de site para [nicho] — exemplo\"", () => {
+    const { meta } = siteConfig;
+    expect(meta.ogTitle).toMatch(/^Modelo de site para .+ — exemplo$/);
+    expect(meta.url).toMatch(/^https:\/\/[^/]+\/$/);
+    expect(meta.ogImage).toBe("/og-image.png");
+    expect(meta.ogDescription).toContain("dados fictícios");
+  });
+
+  it("meta.url ou meta.ogImage inválidos falham o build em vez de omitir as tags", () => {
+    const cfg = structuredClone(siteConfig);
+    cfg.meta.url = "isto-nao-e-uma-url";
+    expect(() => renderHeadTags(cfg)).toThrow(/meta\.url/);
   });
 
   it("escapa HTML dos textos do config", () => {
@@ -163,8 +200,8 @@ describe("estrutura do config", () => {
   });
 
   it.each(configs)("config %s: toda imagem tem alt", (_nome, config) => {
-    const { hero, sobre, og, galeria } = config.imagens;
-    const todas = [hero, sobre, og].filter((i) => i !== undefined);
+    const { hero, sobre, galeria } = config.imagens;
+    const todas = [hero, sobre, { src: config.meta.ogImage, alt: config.meta.ogImageAlt }].filter((i) => i !== undefined);
     for (const g of galeria) {
       if (g.tipo === "foto") todas.push(g.imagem);
       else todas.push(g.antes, g.depois);

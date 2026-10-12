@@ -12,6 +12,10 @@ const altConfig: SiteConfig = {
     lang: "pt-BR",
     noindex: false,
     url: "https://teste.example/",
+    ogTitle: "Título alternativo do cartão (teste)",
+    ogDescription: "Descrição alternativa do cartão de compartilhamento (teste).",
+    ogImage: "/images/og-teste.jpg",
+    ogImageAlt: "Imagem alternativa de compartilhamento",
   },
 
   negocio: {
@@ -191,7 +195,6 @@ const altConfig: SiteConfig = {
       src: "/images/sala-avaliacao.jpg",
       alt: "Retrato alternativo do profissional de teste",
     },
-    og: { src: "/images/og-teste.jpg", alt: "Imagem alternativa de compartilhamento" },
   },
 };
 

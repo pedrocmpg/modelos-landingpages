@@ -52,8 +52,16 @@ export interface Meta {
   lang: string;
   /** true = <meta robots noindex> + robots.txt bloqueando tudo (demo). */
   noindex: boolean;
-  /** URL pública final do site (opcional; usada em og:url). */
-  url?: string;
+  /** URL pública final do site, com https:// e barra final. Base de og:url e da imagem. */
+  url: string;
+  /** Título do cartão de compartilhamento (og:title e twitter:title). */
+  ogTitle: string;
+  /** Descrição do cartão de compartilhamento (og:description e twitter:description). */
+  ogDescription: string;
+  /** Imagem do cartão, 1200x630: caminho a partir de public/ (ex.: "/og-image.png") ou URL absoluta. */
+  ogImage: string;
+  /** Texto alternativo da imagem do cartão. */
+  ogImageAlt: string;
 }
 
 export interface Negocio {
@@ -239,8 +247,6 @@ export interface Imagens {
   hero: Imagem;
   /** Foto do profissional. Vazio = placeholder "[FOTO DO FISIOTERAPEUTA]". */
   profissional?: Imagem;
-  /** Imagem de compartilhamento (Open Graph). */
-  og?: Imagem;
 }
 
 export interface SiteConfig {
