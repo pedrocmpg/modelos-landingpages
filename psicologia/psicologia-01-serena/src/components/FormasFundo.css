@@ -1,0 +1,25 @@
+.formas-fundo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.forma {
+  position: absolute;
+  max-width: 720px;
+  aspect-ratio: 1.1 / 1;
+}
+
+.forma--primaria {
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--cor-primaria) 22%, transparent),
+    transparent 100%
+  );
+}
+
+.forma--suave {
+  background: radial-gradient(closest-side, var(--cor-suave), transparent 100%);
+}

@@ -1,0 +1,44 @@
+.ajuda__grade {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.ajuda__item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(24px, 3vw, 34px);
+}
+
+.ajuda__numero {
+  color: var(--cor-secundaria);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+}
+
+.ajuda__item p {
+  color: var(--cor-texto-secundario);
+  font-size: 16px;
+}
+
+.ajuda__aviso {
+  max-width: 62ch;
+  margin-top: clamp(28px, 4vw, 44px);
+  color: var(--cor-texto-secundario);
+  font-size: 15px;
+  font-style: italic;
+}
+
+@media (max-width: 980px) {
+  .ajuda__grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .ajuda__grade {
+    grid-template-columns: 1fr;
+  }
+}
