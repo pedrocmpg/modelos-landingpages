@@ -1,0 +1,138 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--altura-header);
+}
+
+/* O fundo aparece só com opacity (barato) em vez de animar altura/blur. */
+.header__fundo {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--cor-fundo) 95%, transparent);
+  box-shadow: 0 1px 0 var(--cor-borda);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-enter);
+}
+
+.header[data-rolou] .header__fundo {
+  opacity: 1;
+}
+
+.header__barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 100%;
+  max-width: 1360px;
+}
+
+.header__marca {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 0;
+}
+
+.header__nome {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--fonte-texto);
+  font-size: clamp(19px, 2.6vw, 22px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.header__registro {
+  color: var(--cor-secundaria);
+  font-family: var(--fonte-rotulo);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.header__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.header__cta {
+  min-height: 46px;
+  padding: 10px 22px;
+  font-size: 15px;
+}
+
+.header__toggle {
+  display: none;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  background: transparent;
+  color: var(--cor-texto);
+}
+
+.header__painel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - var(--altura-header));
+  padding: 8px var(--pad-container) 28px;
+  overflow-y: auto;
+  background: var(--cor-fundo);
+  box-shadow: 0 24px 40px -28px var(--cor-sombra);
+}
+
+.header__painel-link {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  border-bottom: 1px solid var(--cor-borda);
+  font-family: var(--fonte-titulo);
+  font-size: 18px;
+}
+
+.header__painel-cta {
+  margin-top: 20px;
+  width: 100%;
+}
+
+@media (max-width: 1240px) {
+  .header__nav {
+    display: none;
+  }
+
+  .header__toggle {
+    display: flex;
+  }
+}
+
+@media (min-width: 1241px) {
+  .header__painel {
+    display: none;
+  }
+}

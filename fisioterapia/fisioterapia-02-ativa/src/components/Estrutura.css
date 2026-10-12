@@ -1,0 +1,64 @@
+/* Assimétrico: a primeira foto, alta, ocupa duas linhas; as outras ficam à direita. */
+.ambientes {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(12px, 1.6vw, 20px);
+}
+
+.ambiente {
+  position: relative;
+}
+
+.ambiente:first-child {
+  grid-row: 1 / span 2;
+}
+
+.ambiente__foto {
+  height: 100%;
+}
+
+.ambiente__foto .foto__quadro {
+  height: 100%;
+}
+
+/* A legenda fica sobre um degradê escuro: o texto claro tem contraste sobre qualquer foto. */
+.ambiente__legenda {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  padding: 64px clamp(16px, 2vw, 24px) clamp(16px, 2vw, 22px);
+  border-radius: 0 0 var(--raio-cartao) var(--raio-cartao);
+  background: linear-gradient(to top, color-mix(in srgb, var(--cor-escuro) 94%, transparent) 38%, transparent);
+  color: var(--cor-fundo);
+  pointer-events: none;
+}
+
+.ambiente__legenda h3 {
+  color: var(--cor-fundo);
+  font-size: clamp(16px, 1.6vw, 19px);
+  line-height: 1.25;
+}
+
+.ambiente__legenda p {
+  margin-top: 6px;
+  color: var(--cor-texto-escuro-atenuado);
+  font-size: 15px;
+}
+
+.ambientes__observacao {
+  margin-top: 28px;
+  color: var(--cor-texto-secundario);
+  font-size: 15.5px;
+}
+
+@media (max-width: 760px) {
+  .ambientes {
+    grid-template-columns: 1fr;
+  }
+
+  .ambiente:first-child {
+    grid-row: auto;
+  }
+}
