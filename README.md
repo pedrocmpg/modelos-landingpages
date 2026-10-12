@@ -19,6 +19,17 @@ publique.
 As demos ficam na Vercel (plano Hobby, só para demonstração, com `noindex`). Sites de clientes
 vão para Cloudflare Pages ou Netlify.
 
+## Vitrine e ferramentas
+
+- [`vitrine/`](vitrine) é uma página estática (sem JavaScript) com um cartão por modelo
+  (captura, nicho, estilo, link da demonstração e botão de WhatsApp). Seu nome e WhatsApp
+  ficam em [`vitrine/vitrine.config.mjs`](vitrine/vitrine.config.mjs). Veja o
+  [README da vitrine](vitrine/README.md).
+- [`ferramentas/`](ferramentas) tem os scripts da raiz (os modelos continuam independentes):
+  `npm run og` gera a `og-image.png` de cada modelo (captura do hero no Chrome, 1200x630,
+  < 300 KB) e as capturas da vitrine; `npm run vitrine` escreve o `index.html` da vitrine;
+  `npm test` confere a vitrine. Uma vez: `cd ferramentas && npm install`.
+
 ## Criar o site de um cliente
 
 1. Copie a pasta do modelo para fora deste repositório (ou para um novo repositório do
@@ -53,6 +64,9 @@ vão para Cloudflare Pages ou Netlify.
   mapa do endereço certo.
 - [ ] **`noindex` removido**: `meta.noindex: false` (tira o `<meta robots>`; o `robots.txt` já libera os rastreadores) e
   `meta.url` com o domínio final.
+- [ ] **Cartão de compartilhamento**: `meta.ogTitle`, `meta.ogDescription`, `meta.ogImageAlt` e
+  `public/og-image.png` (1200x630, < 300 KB) trocados pelos do cliente. As tags `og:*` e `twitter:*`
+  são geradas no build; nada de dado de exemplo no cartão.
 - [ ] **Domínio** apontado no provedor de hospedagem (DNS) e HTTPS ativo.
 - [ ] **Deploy** feito com `npm run build` → `dist/`, link do WhatsApp testado no celular.
 

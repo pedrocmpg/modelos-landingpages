@@ -63,11 +63,15 @@ seções ligadas) e confere que nada do config principal sobrou na página.
 
 | Campo | Tipo | O que é |
 | --- | --- | --- |
-| `meta.title` | texto | `<title>` e `og:title`. |
-| `meta.description` | texto | Meta description e `og:description`. |
+| `meta.title` | texto | `<title>` (aba do navegador e Google). |
+| `meta.description` | texto | Meta description (Google). |
 | `meta.lang` | texto | Idioma do site (ex.: `pt-BR`). |
 | `meta.noindex` | `true`/`false` | `true` = demo: `<meta robots noindex, nofollow>`. O `robots.txt` sempre libera os rastreadores (assim o noindex e o cartão de compartilhamento são lidos). Troque para `false` ao entregar. |
-| `meta.url` | texto, opcional | URL final (usada em `og:url` e para tornar absoluta a imagem do Open Graph). |
+| `meta.url` | texto | URL pública final, com `https://` e barra final. Base de `og:url`, do `canonical` e da imagem do cartão. URL inválida **falha o build**. |
+| `meta.ogTitle` | texto | Título do cartão de compartilhamento (`og:title`, `twitter:title`). |
+| `meta.ogDescription` | texto | Descrição do cartão (`og:description`, `twitter:description`). |
+| `meta.ogImage` | caminho | Imagem do cartão, 1200x630: caminho a partir de `public/` (ex.: `/og-image.png`) ou URL absoluta. |
+| `meta.ogImageAlt` | texto | Texto alternativo da imagem do cartão. |
 | `negocio.nome` | texto | Nome da profissional (cabeçalho, rodapé, Open Graph). |
 | `negocio.slogan` | texto | Frase curta no rodapé. |
 | `negocio.cidade` / `negocio.estado` | texto | Localização. |
@@ -101,10 +105,26 @@ seções ligadas) e confere que nada do config principal sobrou na página.
 | `conteudo.rotulos` | textos de interface | "Pular para o conteúdo", menu, "Conversar no WhatsApp", `fotoProfissional` (placeholder), "foto de exemplo", "Passo", endereço/telefone/horários... |
 | `imagens.hero` | `{ src, alt, exemplo? }` | Foto de ambiente do topo (sem pessoas). |
 | `imagens.profissional` | `{ src, alt, exemplo? }`, opcional | Foto da profissional. Vazio = placeholder `[FOTO DA PROFISSIONAL]`. |
-| `imagens.og` | `{ src, alt }`, opcional | Imagem de compartilhamento. |
 
 Cabeçalho = `eyebrow?`, `titulo`, `introducao?`. Ícones (`icone`): `folha`, `coracao`,
 `mensagem`, `calendario`, `relogio`, `escudo`, `casa`, `video`.
+
+### Cartão de compartilhamento (Open Graph e Twitter)
+
+Ao colar o link no WhatsApp, Instagram, LinkedIn ou X, o cartão sai das tags `og:*` e
+`twitter:*`. Elas são **geradas no build** pelo plugin do `vite.config.ts` (`transformIndexHtml`)
+a partir de `meta.*` e já estão no `index.html` entregue: nada é inserido por JavaScript no
+navegador (um teste confere o HTML do build e que o JS entregue não tem essas tags).
+
+- **Imagem:** `public/og-image.png`, 1200x630, abaixo de 300 KB (um teste confere). Nos modelos
+  deste repositório ela é uma captura do hero com o título "Modelo de site para [nicho] —
+  exemplo", gerada por `ferramentas/gerar-og.mjs` (`npm run og` em `../../ferramentas`).
+  **Em um site de cliente, troque por uma imagem do próprio negócio** (a foto principal ou uma
+  arte), sem dados de exemplo.
+- **`meta.noindex`** controla só o `<meta robots noindex, nofollow>`. O `robots.txt` sempre
+  libera os rastreadores, senão WhatsApp, LinkedIn e Meta não leriam o cartão.
+- O cache dos cartões é do próprio WhatsApp/Meta: depois de trocar a imagem, use o depurador
+  de compartilhamento da Meta ou mude o nome do arquivo.
 
 ### Imagens
 
@@ -164,5 +184,7 @@ clientes: ele é só para uso não comercial.
       autorização dela(e)** (ou manter o placeholder); remover `exemplo: true`.
 - [ ] Trocar o mapa (`mapaEmbedUrl`) e conferir o link do WhatsApp no celular.
 - [ ] Ajustar `public/favicon.svg`.
-- [ ] `meta.noindex: false` e `meta.url` com o domínio final.
+- [ ] `meta.noindex: false`, `meta.url` com o domínio final (com barra final) e `meta.ogTitle`,
+  `meta.ogDescription`, `meta.ogImageAlt` do cliente; `public/og-image.png` trocada por uma
+  imagem 1200x630 (< 300 KB) do negócio.
 - [ ] Rodar `npm run build` e `npm test`.
