@@ -40,7 +40,7 @@ export const hero = {
   secondaryCta: "Ver avaliações",
   // Foto de exemplo (banco de imagens público, Unsplash) — trocar por uma
   // foto real do Golden Pet Shop ou de um pet cliente quando disponível.
-  image: "/pets/hero-golden.jpg",
+  image: "/images/hero-golden.jpg",
   imageAlt: "Golden retriever de pelagem escovada e brilhante, sorrindo",
 };
 
@@ -83,10 +83,10 @@ export const services = [
 // Fotos de exemplo (banco de imagens público, Unsplash) — trocar pelos
 // pets reais do Golden Pet Shop quando as fotos estiverem disponíveis.
 export const petGallery = [
-  { src: "/pets/pet-1-puppy.jpg", alt: "Filhote de golden retriever recém-banhado, com o pelo molhado" },
-  { src: "/pets/pet-2-tongue.jpg", alt: "Golden retriever sorridente sentado no gramado" },
-  { src: "/pets/pet-3-beach.jpg", alt: "Golden retriever feliz ao ar livre, pelagem clara e macia" },
-  { src: "/pets/pet-4-lying.jpg", alt: "Filhote de golden retriever deitado e relaxado" },
+  { src: "/images/pet-1-puppy.jpg", alt: "Filhote de golden retriever recém-banhado, com o pelo molhado" },
+  { src: "/images/pet-2-tongue.jpg", alt: "Golden retriever sorridente sentado no gramado" },
+  { src: "/images/pet-3-beach.jpg", alt: "Golden retriever feliz ao ar livre, pelagem clara e macia" },
+  { src: "/images/pet-4-lying.jpg", alt: "Filhote de golden retriever deitado e relaxado" },
 ];
 
 export const testimonials = [
