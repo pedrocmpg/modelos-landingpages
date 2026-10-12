@@ -11,7 +11,8 @@ publique.
 | Nicho | Modelo | Estilo | Demo |
 | --- | --- | --- | --- |
 | Pet shop | [`pet-shop/pet-shop-01-acolhedor`](pet-shop/pet-shop-01-acolhedor) | Acolhedor: creme, marrom e dourado; Fraunces + DM Sans + Caveat | (ainda não publicado) |
-| Psicologia | [`psicologia/`](psicologia) | — | em breve |
+| Psicologia | [`psicologia/psicologia-01-serena`](psicologia/psicologia-01-serena) | Serena ("luz da manhã"): areia, sálvia e argila; Instrument Serif + Hanken Grotesk | (ainda não publicado) |
+| Psicologia | [`psicologia/psicologia-02-acolher`](psicologia/psicologia-02-acolher) | Acolher ("fim de tarde"): areia, musgo e terracota, layout de revista; Gloock + Onest + Newsreader | (ainda não publicado) |
 | Fisioterapia | [`fisioterapia/`](fisioterapia) | — | em breve |
 
 ## Criar o site de um cliente
@@ -31,7 +32,7 @@ publique.
    (ordem e visibilidade), textos e imagens. A tabela de todos os campos está no README
    do modelo.
 4. Coloque as fotos do cliente em `public/images/` e aponte os caminhos no config.
-5. Troque os dados fictícios, os depoimentos de exemplo (`exemplo: true`) e o mapa.
+5. Troque os dados fictícios, os depoimentos/fotos de exemplo (`exemplo: true`) e o mapa.
 6. Rode `npm test` (confere contraste das cores, fontes proibidas e que nada ficou fixo
    no código) e `npm run build`.
 7. Publique a pasta `dist/` no Cloudflare Pages ou no Netlify (instruções no README do
@@ -44,7 +45,8 @@ publique.
   endereço, horários, redes, textos, serviços/preços, FAQ. Nenhum dado "Exemplo" sobrando.
 - [ ] **Imagens trocadas** em `public/images/` com `alt` descritivo; selos "exemplo"
   removidos (`exemplo: true` → apagar). Favicon (`public/favicon.svg`) trocado.
-- [ ] **Depoimentos e nota reais** (ou bloco removido) e mapa do endereço certo.
+- [ ] **Depoimentos e nota reais** (ou bloco removido; em psicologia não há depoimentos) e
+  mapa do endereço certo.
 - [ ] **`noindex` removido**: `meta.noindex: false` (isso também libera o `robots.txt`) e
   `meta.url` com o domínio final.
 - [ ] **Domínio** apontado no provedor de hospedagem (DNS) e HTTPS ativo.
@@ -54,8 +56,13 @@ publique.
 
 - Configuração em `src/config/site.config.ts`, tipada em `src/config/types.ts`
   (`SiteConfig`). Componentes só têm estrutura, estilo e animação.
-- Dados fictícios obrigatórios nos modelos: "Pet Shop Exemplo", (00) 90000-0000,
-  WhatsApp `5500900000000`, "Rua Exemplo, 123 - Centro", `contato@exemplo.com`.
+- Dados fictícios obrigatórios nos modelos: telefone (00) 90000-0000, WhatsApp
+  `5500900000000`, `contato@exemplo.com` e endereço "Rua Exemplo, 123 ..." (pet shop:
+  "Pet Shop Exemplo"; psicologia: "Psicóloga Clara Exemplo", CRP 00/00000).
+- Cada nicho pode estender o `SiteConfig` (campos novos, documentados no README do modelo).
+  Em **psicologia** o tipo não tem depoimentos, preços nem galeria de antes/depois, por
+  causa das regras do Conselho Federal de Psicologia; o CRP é obrigatório e os testes
+  procuram termos proibidos no config e no texto renderizado.
 - Responsivo de 360 a 1440 px, HTML semântico, foco visível, alvos de toque ≥ 44 px,
   contraste ≥ 4.5:1.
 - Animação com `motion` e `lenis`, só `transform`/`opacity`/`clip-path`, respeitando
