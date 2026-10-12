@@ -1,0 +1,287 @@
+/* Base do modelo. As cores, fontes e raios vêm do config (variáveis --cor-*,
+   --fonte-*, --raio-* injetadas no :root). Aqui só há estrutura e estilo. */
+
+:root {
+  --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Derivadas das cores do config. */
+  --cor-borda: color-mix(in srgb, var(--cor-texto) 11%, transparent);
+  --cor-sombra: color-mix(in srgb, var(--cor-texto) 16%, transparent);
+  --cor-texto-escuro-atenuado: color-mix(in srgb, var(--cor-fundo) 78%, var(--cor-escuro));
+  --cor-linha: color-mix(in srgb, var(--cor-primaria) 55%, transparent);
+
+  --altura-header: 72px;
+  --espaco-secao: clamp(72px, 11vw, 144px);
+  --pad-container: clamp(20px, 5vw, 48px);
+
+  color-scheme: light;
+}
+
+@media (min-width: 601px) {
+  :root {
+    --altura-header: 84px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+html {
+  scroll-behavior: auto;
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+body {
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-texto);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.06;
+  margin: 0;
+  color: var(--cor-texto);
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: clamp(24px, 2.4vw, 30px);
+  line-height: 1.15;
+}
+
+/* Palavra-chave dos títulos: mesma fonte, na cor de destaque. */
+em {
+  color: var(--cor-destaque);
+  font-style: normal;
+}
+
+/* Sobre fundo escuro a cor de destaque não tem contraste: usa o tom suave. */
+.secao--escura em,
+.titulo--escuro em {
+  color: var(--cor-suave);
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--cor-secundaria);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.secao--escura :focus-visible,
+.rodape :focus-visible {
+  outline-color: var(--cor-suave);
+}
+
+/* Foco programático (âncoras): sem anel nas seções, que não são interativas. */
+section:focus {
+  outline: none;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--pad-container);
+}
+
+.secao {
+  position: relative;
+  padding: var(--espaco-secao) 0;
+  overflow-x: clip;
+  scroll-margin-top: var(--altura-header);
+}
+
+.secao--suave {
+  background: var(--cor-suave);
+}
+
+/* Seções escuras cobrem a trajetória que atravessa a página. */
+.secao--escura {
+  z-index: 3;
+  background: var(--cor-escuro);
+  color: var(--cor-fundo);
+}
+
+/* Rótulo pequeno: caixa alta com espaçamento largo. */
+.eyebrow {
+  margin-bottom: 18px;
+  color: var(--cor-secundaria);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 30px;
+  border: 1.5px solid var(--cor-destaque);
+  border-radius: var(--raio-botao);
+  background: var(--cor-destaque);
+  color: var(--cor-superficie);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  transition:
+    transform 0.4s var(--ease-enter),
+    box-shadow 0.4s var(--ease-enter);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -14px var(--cor-sombra);
+  }
+}
+
+.btn--contorno {
+  background: transparent;
+  border-color: var(--cor-primaria);
+  color: var(--cor-primaria);
+}
+
+.secao--escura .btn--contorno {
+  border-color: var(--cor-suave);
+  color: var(--cor-suave);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.link-sublinhado {
+  position: relative;
+  display: inline-block;
+}
+
+.link-sublinhado::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-enter);
+}
+
+@media (hover: hover) {
+  .link-sublinhado:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.pular-conteudo {
+  position: absolute;
+  top: 0;
+  left: 16px;
+  z-index: 400;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background: var(--cor-escuro);
+  color: var(--cor-fundo);
+  font-weight: 600;
+  transform: translateY(-120%);
+  transition: transform 0.2s var(--ease-enter);
+}
+
+.pular-conteudo:focus {
+  transform: translateY(16px);
+}
+
+.cartao {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-cartao);
+  box-shadow: 0 24px 48px -32px var(--cor-sombra);
+}
+
+/* Movimento reduzido: nada de transições longas; só mudanças de cor/opacidade. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.15s !important;
+    scroll-behavior: auto !important;
+  }
+
+  .btn:hover {
+    transform: none;
+  }
+}
+
+.corpo {
+  position: relative;
+}
