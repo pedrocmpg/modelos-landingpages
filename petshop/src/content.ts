@@ -6,7 +6,7 @@ export const business = {
   neighborhood: "São Roque",
   city: "Bento Gonçalves",
   state: "RS",
-  address: "R. Arlindo Franklin Barbosa, 1235, São Roque, Bento Gonçalves, RS",
+  address: "Rua Arlindo Franklin Barbosa, 1235 - São Roque, Bento Gonçalves - RS",
   phoneDisplay: "(54) 99167-6576",
   // Apenas dígitos, com código do país, para montar o link wa.me.
   whatsappNumber: "5554991676576",
@@ -19,7 +19,9 @@ export const business = {
   instagram: "[INSTAGRAM]",
   googleRating: 5.0,
   googleReviewCount: 105,
-  mapEmbedUrl: "[MAPA]",
+  // Embed público do Google Maps por busca de endereço (não exige API key).
+  mapEmbedUrl:
+    "https://www.google.com/maps?q=Rua+Arlindo+Franklin+Barbosa,+1235+-+S%C3%A3o+Roque,+Bento+Gon%C3%A7alves+-+RS&output=embed",
 };
 
 export const nav = [
@@ -36,7 +38,10 @@ export const hero = {
     "Cuidado de perto, ambiente tranquilo e capricho em cada detalhe para o seu pet sair cheiroso, escovado e feliz.",
   primaryCta: "Agendar pelo WhatsApp",
   secondaryCta: "Ver avaliações",
-  imageAlt: "[FOTO do Golden Pet Shop ou de um pet recém-tosado]",
+  // Foto de exemplo (banco de imagens público, Unsplash) — trocar por uma
+  // foto real do Golden Pet Shop ou de um pet cliente quando disponível.
+  image: "/pets/hero-golden.jpg",
+  imageAlt: "Golden retriever de pelagem escovada e brilhante, sorrindo",
 };
 
 export const whyTheyReturn = [
@@ -70,32 +75,34 @@ export const services = [
   },
   {
     title: "[OUTRO SERVIÇO]",
-    description: "[Descrição do serviço a confirmar com o dono do Golden Pet Shop]",
+    description: "[Descrição do serviço a confirmar]",
     isPlaceholder: true,
   },
 ];
 
+// Fotos de exemplo (banco de imagens público, Unsplash) — trocar pelos
+// pets reais do Golden Pet Shop quando as fotos estiverem disponíveis.
 export const petGallery = [
-  { alt: "[FOTO de pet 1]" },
-  { alt: "[FOTO de pet 2]" },
-  { alt: "[FOTO de pet 3]" },
-  { alt: "[FOTO de pet 4]" },
+  { src: "/pets/pet-1-puppy.jpg", alt: "Filhote de golden retriever recém-banhado, com o pelo molhado" },
+  { src: "/pets/pet-2-tongue.jpg", alt: "Golden retriever sorridente sentado no gramado" },
+  { src: "/pets/pet-3-beach.jpg", alt: "Golden retriever feliz ao ar livre, pelagem clara e macia" },
+  { src: "/pets/pet-4-lying.jpg", alt: "Filhote de golden retriever deitado e relaxado" },
 ];
 
 export const testimonials = [
   {
     quote:
-      "[Depoimento de cliente a confirmar — trecho de avaliação real do Google]",
+      "[Depoimento de cliente a confirmar]",
     author: "[Nome do cliente]",
   },
   {
     quote:
-      "[Depoimento de cliente a confirmar — trecho de avaliação real do Google]",
+      "[Depoimento de cliente a confirmar]",
     author: "[Nome do cliente]",
   },
   {
     quote:
-      "[Depoimento de cliente a confirmar — trecho de avaliação real do Google]",
+      "[Depoimento de cliente a confirmar]",
     author: "[Nome do cliente]",
   },
 ];

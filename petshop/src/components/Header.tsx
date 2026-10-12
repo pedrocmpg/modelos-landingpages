@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { business, nav } from "../content";
 
 function PawLogo() {
@@ -28,6 +28,20 @@ export function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setMenuOpen(false);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
 
   return (
     <motion.header
@@ -66,11 +80,13 @@ export function Header() {
             gap: 10,
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: 19,
+            fontSize: "clamp(16px, 3vw, 19px)",
+            whiteSpace: "nowrap",
+            flexShrink: 0,
           }}
         >
           <PawLogo />
-          {business.name}
+          <span className="header-brand-name">{business.name}</span>
         </a>
 
         <nav
@@ -129,11 +145,13 @@ export function Header() {
         </button>
       </div>
 
+      <AnimatePresence>
       {menuOpen && (
         <motion.nav
           id="mobile-menu"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
           className="header-nav-mobile-panel"
           style={{
@@ -147,6 +165,8 @@ export function Header() {
             display: "flex",
             flexDirection: "column",
             gap: 4,
+            maxHeight: "calc(100dvh - var(--header-height))",
+            overflowY: "auto",
           }}
         >
           {nav.map((item) => (
@@ -176,6 +196,7 @@ export function Header() {
           </a>
         </motion.nav>
       )}
+      </AnimatePresence>
     </motion.header>
   );
 }

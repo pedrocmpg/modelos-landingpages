@@ -31,26 +31,30 @@ mexer em nenhum componente.
 
 ### Trocando as fotos
 
-As fotos ainda são placeholders (blocos com legenda `[FOTO ...]`).
-Para trocar por imagens reais:
+As fotos do hero e da galeria "Clientes de quatro patas" hoje usam
+fotos de exemplo de golden retrievers do banco público Unsplash (uso
+livre, sem necessidade de atribuição) — só para a demo não ficar com
+caixas vazias. **São placeholders, não fotos do cliente.** Para trocar
+por fotos reais do Golden Pet Shop:
 
 1. Adicione os arquivos em `public/pets/` (ex.: `public/pets/rex.jpg`).
-2. Abra [`src/components/PhotoPlaceholder.tsx`](src/components/PhotoPlaceholder.tsx)
-   e troque o bloco de texto por uma tag `<img src="/pets/rex.jpg" alt="..." />`
-   dentro do mesmo wrapper (a animação de cortina/zoom continua funcionando
-   igual).
+2. Em [`src/content.ts`](src/content.ts), troque o campo `image`/`src`
+   de `hero` ou `petGallery` para o novo caminho (ex.: `/pets/rex.jpg`)
+   e ajuste o `alt` para descrever a foto real.
+
+A animação de cortina/zoom em `PhotoPlaceholder.tsx` funciona igual
+com qualquer imagem — não precisa mexer no componente.
 
 ## O que ainda falta preencher
 
 Pontos marcados com colchetes no código e na tela — preencher antes de
 entregar ao cliente:
 
-- **Fotos** do pet shop e dos pets (hero e galeria "Clientes de quatro patas").
+- **Fotos reais** do pet shop e dos pets — atualmente são fotos de
+  banco de imagens (Unsplash), ver seção acima.
 - **Terceiro serviço** (`[OUTRO SERVIÇO]` em `src/content.ts`) — nome, descrição e se deve entrar valores.
 - **Depoimentos reais** dos 3 clientes (trecho de avaliação do Google + nome).
 - **Instagram** do Golden Pet Shop (`business.instagram` em `src/content.ts`).
-- **Mapa** — trocar o placeholder `[MAPA]` por um embed real do Google Maps
-  (iframe com o endereço) em `src/components/Contact.tsx`.
 
 ## Ajustando a intensidade das animações
 

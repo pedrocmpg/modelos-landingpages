@@ -10,7 +10,7 @@ export function Footer() {
       }}
     >
       <div
-        className="container"
+        className="container footer-inner"
         style={{
           display: "flex",
           flexWrap: "wrap",
@@ -33,6 +33,18 @@ export function Footer() {
           © {new Date().getFullYear()} {business.name}. Site de demonstração.
         </span>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .footer-inner {
+            justify-content: center;
+            text-align: center;
+          }
+          .footer-inner nav {
+            justify-content: center;
+          }
+        }
+      `}</style>
     </footer>
   );
 }

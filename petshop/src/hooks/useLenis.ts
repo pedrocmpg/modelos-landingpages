@@ -10,8 +10,11 @@ export function useLenis() {
     if (reducedMotion) return;
 
     const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 1.2,
+      // ease-in-out cubic: suave para começar e terminar o movimento,
+      // em vez de uma curva ease-out-expo que "dispara" nos primeiros
+      // instantes e dá a sensação de teleporte seguido de freada lenta.
+      easing: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
       smoothWheel: true,
     });
 

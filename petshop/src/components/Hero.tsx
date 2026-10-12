@@ -30,22 +30,17 @@ export function Hero() {
       ref={sectionRef}
       className="section"
       style={{
-        paddingTop: "calc(var(--header-height) + 48px)",
+        paddingTop: "calc(var(--header-height) + clamp(24px, 5vw, 48px))",
+        paddingBottom: "clamp(40px, 6vw, 96px)",
         overflow: "hidden",
         position: "relative",
       }}
     >
       <div
-        className="container"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1.1fr 1fr",
-          gap: 48,
-          alignItems: "center",
-        }}
+        className="container hero-grid"
         data-hero-grid
       >
-        <div>
+        <div className="hero-copy">
           <motion.span
             className="eyebrow"
             style={{
@@ -97,8 +92,9 @@ export function Hero() {
           </h1>
 
           <motion.p
+            className="hero-subtitle"
             style={{
-              fontSize: 18,
+              fontSize: "clamp(16px, 2.2vw, 18px)",
               color: "var(--color-text-secondary)",
               maxWidth: 460,
               marginBottom: 32,
@@ -111,6 +107,7 @@ export function Hero() {
           </motion.p>
 
           <motion.div
+            className="hero-cta-row"
             style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 28 }}
             initial={prefersReduced ? undefined : { opacity: 0, y: 20 }}
             animate={prefersReduced ? undefined : { opacity: 1, y: 0 }}
@@ -130,7 +127,8 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            style={{ display: "flex", alignItems: "center", gap: 8, fontWeight: 600 }}
+            className="hero-rating"
+            style={{ display: "flex", alignItems: "center", gap: 8, fontWeight: 600, flexWrap: "wrap" }}
             initial={prefersReduced ? undefined : { opacity: 0, y: 20 }}
             animate={prefersReduced ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.66 }}
@@ -146,15 +144,15 @@ export function Hero() {
           </motion.div>
         </div>
 
-        <div style={{ position: "relative" }}>
+        <div className="hero-photo" style={{ position: "relative" }}>
           <motion.div
             aria-hidden="true"
             style={{
               position: "absolute",
               top: "-10%",
-              right: "-10%",
-              width: "70%",
-              height: "70%",
+              right: "-8%",
+              width: "72%",
+              height: "72%",
               borderRadius: "50%",
               background: "var(--color-gold)",
               opacity: 0.35,
@@ -173,20 +171,105 @@ export function Hero() {
             }
           />
           <motion.div
-            style={{ position: "relative", zIndex: 1, y: imageY }}
+            style={{ position: "relative", zIndex: 1, y: imageY, maxWidth: 480, marginInline: "auto" }}
             initial={prefersReduced ? undefined : { opacity: 0, scale: 0.96 }}
             animate={prefersReduced ? undefined : { opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
           >
-            <PhotoPlaceholder alt={hero.imageAlt} aspectRatio="1 / 1" animateOnMount delay={0.3} />
+            <PhotoPlaceholder
+              src={hero.image}
+              alt={hero.imageAlt}
+              aspectRatio="1 / 1"
+              objectPosition="center 15%"
+              animateOnMount
+              delay={0.3}
+            />
+
+            <motion.div
+              className="hero-sticker"
+              aria-hidden="true"
+              initial={prefersReduced ? undefined : { opacity: 0, scale: 0.6, rotate: -18 }}
+              animate={
+                prefersReduced
+                  ? undefined
+                  : { opacity: 1, scale: 1, rotate: -8 }
+              }
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.9 }}
+              style={{
+                position: "absolute",
+                bottom: "-6%",
+                left: "-8%",
+                zIndex: 2,
+                width: "clamp(84px, 14vw, 116px)",
+                height: "clamp(84px, 14vw, 116px)",
+                borderRadius: "50%",
+                background: "var(--color-teal)",
+                color: "var(--color-cream)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                textAlign: "center",
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: "clamp(11px, 1.6vw, 13px)",
+                lineHeight: 1.2,
+                boxShadow: "0 16px 32px -12px rgba(43,29,20,0.35)",
+                border: "3px solid var(--color-cream)",
+                padding: 8,
+              }}
+            >
+              {!prefersReduced && (
+                <motion.span
+                  aria-hidden="true"
+                  style={{ position: "absolute", inset: -3, borderRadius: "50%" }}
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                />
+              )}
+              carinho
+              <br />
+              garantido
+            </motion.div>
           </motion.div>
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
-          [data-hero-grid] {
-            grid-template-columns: 1fr !important;
+        .hero-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+          gap: clamp(32px, 5vw, 64px);
+          align-items: center;
+        }
+        @media (max-width: 1023px) {
+          .hero-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+          }
+          .hero-photo {
+            max-width: 420px;
+            width: 100%;
+            margin: 0 auto;
+            order: -1;
+          }
+          .hero-copy {
+            text-align: center;
+          }
+          .hero-subtitle,
+          .hero-cta-row,
+          .hero-rating {
+            margin-left: auto;
+            margin-right: auto;
+            justify-content: center;
+          }
+        }
+        @media (max-width: 600px) {
+          .hero-photo {
+            max-width: 280px;
+          }
+          .hero-sticker {
+            left: 0 !important;
+            bottom: -4% !important;
           }
         }
       `}</style>
