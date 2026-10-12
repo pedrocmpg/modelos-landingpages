@@ -1,201 +1,129 @@
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { business, nav } from "../content";
-
-function PawLogo() {
-  return (
-    <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true">
-      <g fill="var(--color-gold)">
-        <ellipse cx="22" cy="22" rx="5" ry="6.5" />
-        <ellipse cx="42" cy="22" rx="5" ry="6.5" />
-        <ellipse cx="14" cy="34" rx="4.5" ry="6" />
-        <ellipse cx="50" cy="34" rx="4.5" ry="6" />
-        <path d="M32 32c8 0 14 6 14 12.5S40.5 52 32 52s-14-3.5-14-7.5S24 32 32 32z" />
-      </g>
-    </svg>
-  );
-}
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { useConfig } from "../context/configContext.ts";
+import { whatsappUrl } from "../config/links.ts";
+import { pausarRolagem, retomarRolagem } from "../lib/scroll.ts";
+import { EASE, useMovimento } from "../motion/tokens.ts";
+import { GlifoFechar, GlifoMenu } from "./Glifos.tsx";
+import { Icone } from "./Icone.tsx";
+import "./Header.css";
 
 export function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { negocio, contato, conteudo, secoes } = useConfig();
+  const { rotulos } = conteudo;
+  const m = useMovimento();
+  const [rolou, setRolou] = useState(false);
+  const [menuAberto, setMenuAberto] = useState(false);
+  const botaoMenu = useRef<HTMLButtonElement>(null);
+
+  const links = secoes.filter((s) => s.ativo && s.menu);
 
   useEffect(() => {
-    function onScroll() {
-      setScrolled(window.scrollY > 24);
-    }
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const aoRolar = () => setRolou(window.scrollY > 24);
+    aoRolar();
+    window.addEventListener("scroll", aoRolar, { passive: true });
+    return () => window.removeEventListener("scroll", aoRolar);
   }, []);
 
   useEffect(() => {
-    if (!menuOpen) return;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setMenuOpen(false);
-    }
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      window.removeEventListener("keydown", onKey);
+    if (!menuAberto) return;
+    pausarRolagem();
+    const aoTeclar = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMenuAberto(false);
+        botaoMenu.current?.focus();
+      }
     };
-  }, [menuOpen]);
+    window.addEventListener("keydown", aoTeclar);
+    return () => {
+      window.removeEventListener("keydown", aoTeclar);
+      retomarRolagem();
+    };
+  }, [menuAberto]);
+
+  const fechar = () => setMenuAberto(false);
 
   return (
     <motion.header
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 100,
-        background: scrolled ? "rgba(255, 246, 229, 0.85)" : "transparent",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        boxShadow: scrolled ? "0 4px 20px rgba(43, 29, 20, 0.08)" : "none",
-        transition: "background 0.35s var(--ease-enter), box-shadow 0.35s var(--ease-enter), height 0.35s var(--ease-enter)",
-        height: scrolled ? "var(--header-height-scrolled)" : "var(--header-height)",
-        display: "flex",
-        alignItems: "center",
-      }}
+      className="header"
+      data-rolou={rolou || menuAberto ? "" : undefined}
+      initial={m.observador ? { y: "-100%" } : false}
+      animate={{ y: 0 }}
+      transition={{ duration: m.dur(0.7), ease: EASE.enter }}
     >
-      <div
-        className="container"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "100%",
-        }}
-      >
-        <a
-          href="#top"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            fontFamily: "var(--font-display)",
-            fontWeight: 600,
-            fontSize: "clamp(16px, 3vw, 19px)",
-            whiteSpace: "nowrap",
-            flexShrink: 0,
-          }}
-        >
-          <PawLogo />
-          <span className="header-brand-name">{business.name}</span>
+      <div className="header__fundo" aria-hidden="true" />
+      <div className="container header__barra">
+        <a href="#hero" className="header__marca" onClick={fechar}>
+          <span className="header__logo">
+            <Icone id="pata" tamanho={28} />
+          </span>
+          <span className="header__nome">{negocio.nome}</span>
         </a>
 
-        <nav
-          style={{ display: "flex", alignItems: "center", gap: 32 }}
-          className="header-nav-desktop"
-        >
-          {nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="link-underline"
-              style={{ fontWeight: 600, fontSize: 15 }}
-            >
-              {item.label}
+        <nav className="header__nav" aria-label={rotulos.menuPrincipal}>
+          {links.map((s) => (
+            <a key={s.id} href={`#${s.id}`} className="link-sublinhado header__link">
+              {s.menu}
             </a>
           ))}
-          <a href="#contato" className="btn btn-primary btn-shine">
-            Agendar
+          <a
+            href={whatsappUrl(contato)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn--primario btn--brilho header__cta"
+          >
+            {rotulos.agendar}
           </a>
         </nav>
 
         <button
+          ref={botaoMenu}
           type="button"
-          className="header-nav-mobile-toggle"
-          onClick={() => setMenuOpen((v) => !v)}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-menu"
-          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
-          style={{
-            display: "none",
-            background: "transparent",
-            border: "none",
-            width: 44,
-            height: 44,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          className="header__toggle"
+          onClick={() => setMenuAberto((v) => !v)}
+          aria-expanded={menuAberto}
+          aria-controls="menu-mobile"
+          aria-label={menuAberto ? rotulos.menuFechar : rotulos.menuAbrir}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            {menuOpen ? (
-              <path
-                d="M5 5l14 14M19 5L5 19"
-                stroke="var(--color-text)"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            ) : (
-              <path
-                d="M4 7h16M4 12h16M4 17h16"
-                stroke="var(--color-text)"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            )}
-          </svg>
+          {menuAberto ? <GlifoFechar /> : <GlifoMenu />}
         </button>
       </div>
 
       <AnimatePresence>
-      {menuOpen && (
-        <motion.nav
-          id="mobile-menu"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="header-nav-mobile-panel"
-          style={{
-            position: "absolute",
-            top: "100%",
-            left: 0,
-            right: 0,
-            background: "var(--color-cream)",
-            boxShadow: "0 12px 24px rgba(43,29,20,0.12)",
-            padding: "16px 20px 24px",
-            display: "flex",
-            flexDirection: "column",
-            gap: 4,
-            maxHeight: "calc(100dvh - var(--header-height))",
-            overflowY: "auto",
-          }}
-        >
-          {nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={() => setMenuOpen(false)}
-              style={{
-                padding: "12px 4px",
-                fontWeight: 600,
-                fontSize: 16,
-                minHeight: 44,
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              {item.label}
-            </a>
-          ))}
-          <a
-            href="#contato"
-            onClick={() => setMenuOpen(false)}
-            className="btn btn-primary"
-            style={{ marginTop: 8, width: "100%" }}
+        {menuAberto && (
+          <motion.nav
+            id="menu-mobile"
+            className="header__painel"
+            aria-label={rotulos.menuPrincipal}
+            initial={m.reduzido ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}
+            animate={m.reduzido ? { opacity: 1 } : { clipPath: "inset(0 0 -40px 0)" }}
+            exit={m.reduzido ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: m.dur(0.45), ease: EASE.inOut }}
           >
-            Agendar
-          </a>
-        </motion.nav>
-      )}
+            {links.map((s, i) => (
+              <motion.a
+                key={s.id}
+                href={`#${s.id}`}
+                className="header__painel-link"
+                onClick={fechar}
+                initial={m.reduzido ? false : { opacity: 0, x: -16 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: m.dur(0.45), ease: EASE.enter, delay: 0.08 + i * 0.05 }}
+              >
+                {s.menu}
+              </motion.a>
+            ))}
+            <a
+              href={whatsappUrl(contato)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn--primario header__painel-cta"
+              onClick={fechar}
+            >
+              {rotulos.agendarWhatsapp}
+            </a>
+          </motion.nav>
+        )}
       </AnimatePresence>
     </motion.header>
   );

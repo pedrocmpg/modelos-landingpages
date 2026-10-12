@@ -37,7 +37,7 @@ function siteConfigPlugin(): Plugin {
       })
     },
     handleHotUpdate({ file, server: s }) {
-      if (/[\/]src[\/]config[\/]/.test(file)) {
+      if (file.includes('/src/config/')) {
         s.ws.send({ type: 'full-reload' })
         return []
       }

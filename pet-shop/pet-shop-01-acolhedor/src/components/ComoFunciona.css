@@ -1,0 +1,75 @@
+.passos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 36px);
+  margin-top: clamp(32px, 5vw, 56px);
+}
+
+.passo {
+  text-align: center;
+}
+
+.passo__marca {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.passo__numero {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--cor-primaria);
+  color: var(--cor-texto);
+  font-family: var(--fonte-titulo);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* Linha que liga este passo ao próximo (desenhada com scaleX). */
+.passo__linha {
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 40px);
+  width: calc(100% + clamp(18px, 3vw, 36px) - 80px);
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--cor-secundaria) 0 8px,
+    transparent 8px 16px
+  );
+  transform-origin: left center;
+}
+
+.passo__corpo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.passo h3 {
+  font-size: clamp(20px, 2.4vw, 24px);
+}
+
+.passo p {
+  max-width: 300px;
+  color: var(--cor-texto-secundario);
+}
+
+@media (max-width: 800px) {
+  .passos {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .passo__linha {
+    display: none;
+  }
+}

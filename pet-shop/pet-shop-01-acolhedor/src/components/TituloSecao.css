@@ -1,0 +1,53 @@
+.titulo-secao {
+  max-width: 720px;
+}
+
+.titulo-secao--centro {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.titulo-secao__mascara {
+  overflow: hidden;
+  /* Folga para as descendentes (g, p, q) não serem cortadas pela máscara. */
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+}
+
+.titulo-secao h2 {
+  font-size: clamp(28px, 4.4vw, 42px);
+  line-height: 1.12;
+}
+
+.titulo-secao__linha {
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin-top: 16px;
+  border-radius: 3px;
+  background: var(--cor-primaria);
+  transform-origin: left center;
+}
+
+.titulo-secao--centro .titulo-secao__linha {
+  margin-inline: auto;
+  transform-origin: center;
+}
+
+.titulo-secao__intro {
+  margin-top: 18px;
+  font-size: 18px;
+  color: var(--cor-texto-secundario);
+}
+
+.titulo-secao--escuro h2 {
+  color: var(--cor-fundo);
+}
+
+.titulo-secao--escuro .eyebrow {
+  color: var(--cor-primaria);
+}
+
+.titulo-secao--escuro .titulo-secao__intro {
+  color: var(--cor-texto-escuro-atenuado);
+}

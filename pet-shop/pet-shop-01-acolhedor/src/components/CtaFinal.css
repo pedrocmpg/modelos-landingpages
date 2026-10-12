@@ -1,0 +1,32 @@
+.cta-final {
+  padding: clamp(32px, 5vw, 64px) 0;
+}
+
+.cta-final__quadro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  border-radius: var(--raio-cartao);
+  padding: clamp(40px, 7vw, 80px) clamp(24px, 6vw, 72px);
+  background: var(--cor-primaria);
+  color: var(--cor-texto);
+  text-align: center;
+}
+
+.cta-final__quadro h2 {
+  max-width: 640px;
+  font-size: clamp(28px, 4.4vw, 42px);
+}
+
+.cta-final__quadro p {
+  max-width: 520px;
+  font-size: 18px;
+}
+
+.cta-final__botao {
+  margin-top: 12px;
+  background: var(--cor-escuro);
+  border-color: var(--cor-escuro);
+  color: var(--cor-fundo);
+}

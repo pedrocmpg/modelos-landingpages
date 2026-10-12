@@ -1,50 +1,46 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
-import { useReducedMotion } from "./useReducedMotion";
+import { registrarLenis } from "../lib/scroll.ts";
+import { useReducedMotion } from "./useReducedMotion.ts";
 
-// Rolagem suave via Lenis; desligada quando o usuário prefere menos movimento.
+// ease-in-out cúbico: começa e termina devagar, sem "teleporte".
+const easing = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+// Rolagem suave via Lenis nas âncoras e com a roda do mouse.
+// Desligada com prefers-reduced-motion. No toque, a rolagem continua nativa.
 export function useLenis() {
-  const reducedMotion = useReducedMotion();
+  const reduzido = useReducedMotion();
 
   useEffect(() => {
-    if (reducedMotion) return;
+    if (reduzido || typeof requestAnimationFrame === "undefined" || typeof ResizeObserver === "undefined") return;
 
-    const lenis = new Lenis({
-      duration: 1.2,
-      // ease-in-out cubic: suave para começar e terminar o movimento,
-      // em vez de uma curva ease-out-expo que "dispara" nos primeiros
-      // instantes e dá a sensação de teleporte seguido de freada lenta.
-      easing: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
-      smoothWheel: true,
-    });
+    const lenis = new Lenis({ duration: 1.15, easing, smoothWheel: true });
+    registrarLenis(lenis);
 
-    let rafId: number;
-    function raf(time: number) {
+    let rafId = requestAnimationFrame(function raf(time) {
       lenis.raf(time);
       rafId = requestAnimationFrame(raf);
-    }
-    rafId = requestAnimationFrame(raf);
+    });
 
-    const headerOffset = 84;
-
-    function onAnchorClick(e: MouseEvent) {
-      const target = e.target as HTMLElement;
-      const anchor = target.closest('a[href^="#"]') as HTMLAnchorElement | null;
-      if (!anchor) return;
-      const id = anchor.getAttribute("href");
+    function aoClicar(e: MouseEvent) {
+      const ancora = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
+      const id = ancora?.getAttribute("href");
       if (!id || id === "#") return;
-      const el = document.querySelector(id);
-      if (!el) return;
+      const alvo = document.querySelector<HTMLElement>(id);
+      if (!alvo) return;
       e.preventDefault();
-      lenis.scrollTo(el as HTMLElement, { offset: -headerOffset });
+      const header = document.querySelector("header");
+      const offset = -(header?.getBoundingClientRect().height ?? 0);
+      lenis.scrollTo(alvo, { offset });
+      alvo.focus({ preventScroll: true });
     }
-
-    document.addEventListener("click", onAnchorClick);
+    document.addEventListener("click", aoClicar);
 
     return () => {
       cancelAnimationFrame(rafId);
-      document.removeEventListener("click", onAnchorClick);
+      document.removeEventListener("click", aoClicar);
+      registrarLenis(null);
       lenis.destroy();
     };
-  }, [reducedMotion]);
+  }, [reduzido]);
 }

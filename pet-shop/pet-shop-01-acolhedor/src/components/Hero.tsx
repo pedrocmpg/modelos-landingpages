@@ -1,278 +1,147 @@
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useReducedMotion as useMotionReducedMotion,
-} from "motion/react";
-import { useRef } from "react";
-import { business, hero } from "../content";
-import { whatsappHref } from "../lib/whatsapp";
-import { AnimatedCounter } from "./AnimatedCounter";
-import { PhotoPlaceholder } from "./PhotoPlaceholder";
-
-const words = hero.title.split(" ");
+import { Fragment, useRef } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { useConfig } from "../context/configContext.ts";
+import { whatsappUrl } from "../config/links.ts";
+import { EASE, useMovimento } from "../motion/tokens.ts";
+import { ContadorAnimado } from "./ContadorAnimado.tsx";
+import { Foto } from "./Foto.tsx";
+import { GlifoWhatsapp } from "./Glifos.tsx";
+import { SeloExemplo } from "./SeloExemplo.tsx";
+import "./Hero.css";
 
 export function Hero() {
-  const prefersReduced = useMotionReducedMotion();
-  const sectionRef = useRef<HTMLElement>(null);
+  const { conteudo, imagens, contato, secoes } = useConfig();
+  const hero = conteudo.hero;
+  const nota = conteudo.depoimentos?.nota;
+  const m = useMovimento();
+  const secaoRef = useRef<HTMLElement>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
+  // Parallax leve (some com movimento reduzido: dist() devolve 0).
+  const { scrollYProgress } = useScroll({ target: secaoRef, offset: ["start start", "end start"] });
+  const yFoto = useTransform(scrollYProgress, [0, 1], [0, -m.dist(36)]);
+  const yMancha = useTransform(scrollYProgress, [0, 1], [0, -m.dist(70)]);
+
+  const palavras = hero.titulo.split(" ");
+  const alvoSecundario = hero.ctaSecundario
+    ? secoes.find((s) => s.id === hero.ctaSecundario!.secao && s.ativo)
+    : undefined;
+
+  const entrada = (atraso: number) => ({
+    initial: m.observador ? { opacity: 0, y: m.dist(22) } : false,
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: m.dur(0.7), ease: EASE.enter, delay: m.reduzido ? 0 : atraso },
   });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], [0, prefersReduced ? 0 : -32]);
-  const decorY = useTransform(scrollYProgress, [0, 1], [0, prefersReduced ? 0 : -60]);
-
   return (
-    <section
-      id="top"
-      ref={sectionRef}
-      className="section"
-      style={{
-        paddingTop: "calc(var(--header-height) + clamp(24px, 5vw, 48px))",
-        paddingBottom: "clamp(40px, 6vw, 96px)",
-        overflow: "hidden",
-        position: "relative",
-      }}
-    >
-      <div
-        className="container hero-grid"
-        data-hero-grid
-      >
-        <div className="hero-copy">
-          <motion.span
-            className="eyebrow"
-            style={{
-              background: "var(--color-bg-alt)",
-              padding: "8px 16px",
-              borderRadius: "var(--radius-pill)",
-              marginBottom: 24,
-              display: "inline-block",
-            }}
-            initial={prefersReduced ? undefined : { opacity: 0, y: 20 }}
-            animate={prefersReduced ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {hero.badge}
-          </motion.span>
+    <section id="hero" ref={secaoRef} className="secao hero" tabIndex={-1}>
+      <div className="container hero__grade">
+        <div className="hero__texto">
+          {hero.selo && (
+            <motion.p className="hero__selo" {...entrada(0)}>
+              {hero.selo}
+            </motion.p>
+          )}
 
-          <h1
-            style={{
-              fontSize: "clamp(34px, 5vw, 54px)",
-              lineHeight: 1.25,
-              marginBottom: 24,
-            }}
-          >
-            {words.map((word, i) => (
-              <span
-                key={i}
-                style={{
-                  display: "inline-block",
-                  overflow: "hidden",
-                  verticalAlign: "top",
-                  paddingBottom: "0.2em",
-                  marginBottom: "-0.2em",
-                }}
-              >
-                <motion.span
-                  style={{ display: "inline-block" }}
-                  initial={prefersReduced ? undefined : { y: "110%" }}
-                  animate={prefersReduced ? undefined : { y: 0 }}
-                  transition={{
-                    duration: 0.7,
-                    ease: [0.22, 1, 0.36, 1],
-                    delay: 0.15 + i * 0.06,
-                  }}
-                >
-                  {word + (i < words.length - 1 ? " " : "")}
-                </motion.span>
-              </span>
+          <h1 className="hero__titulo">
+            {palavras.map((palavra, i) => (
+              <Fragment key={i}>
+                <span className="hero__palavra">
+                  <motion.span
+                    className="hero__palavra-interna"
+                    initial={m.observador ? (m.reduzido ? { opacity: 0 } : { y: "112%" }) : false}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{
+                      duration: m.dur(0.75),
+                      ease: EASE.enter,
+                      delay: m.reduzido ? 0 : 0.15 + i * 0.06,
+                    }}
+                  >
+                    {palavra}
+                  </motion.span>
+                </span>
+                {i < palavras.length - 1 ? " " : null}
+              </Fragment>
             ))}
           </h1>
 
-          <motion.p
-            className="hero-subtitle"
-            style={{
-              fontSize: "clamp(16px, 2.2vw, 18px)",
-              color: "var(--color-text-secondary)",
-              maxWidth: 460,
-              marginBottom: 32,
-            }}
-            initial={prefersReduced ? undefined : { opacity: 0, y: 20 }}
-            animate={prefersReduced ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
-          >
-            {hero.subtitle}
+          <motion.p className="hero__subtitulo" {...entrada(0.5)}>
+            {hero.subtitulo}
           </motion.p>
 
-          <motion.div
-            className="hero-cta-row"
-            style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 28 }}
-            initial={prefersReduced ? undefined : { opacity: 0, y: 20 }}
-            animate={prefersReduced ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.58 }}
-          >
+          <motion.div className="hero__acoes" {...entrada(0.6)}>
             <a
-              href={whatsappHref}
+              href={whatsappUrl(contato)}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-primary btn-shine"
+              className="btn btn--primario btn--brilho"
             >
-              {hero.primaryCta}
+              <GlifoWhatsapp />
+              {hero.ctaPrimario}
             </a>
-            <a href="#avaliacoes" className="btn btn-secondary">
-              {hero.secondaryCta}
-            </a>
+            {hero.ctaSecundario && alvoSecundario && (
+              <a href={`#${alvoSecundario.id}`} className="btn btn--contorno">
+                {hero.ctaSecundario.texto}
+              </a>
+            )}
           </motion.div>
 
-          <motion.div
-            className="hero-rating"
-            style={{ display: "flex", alignItems: "center", gap: 8, fontWeight: 600, flexWrap: "wrap" }}
-            initial={prefersReduced ? undefined : { opacity: 0, y: 20 }}
-            animate={prefersReduced ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.66 }}
-          >
-            <span aria-hidden="true" style={{ color: "var(--color-gold)", fontSize: 18 }}>
-              ★★★★★
-            </span>
-            <span>
-              <AnimatedCounter value={business.googleRating} decimals={1} /> ·{" "}
-              <AnimatedCounter value={business.googleReviewCount} /> avaliações no
-              Google
-            </span>
-          </motion.div>
+          {nota && (
+            <motion.p className="hero__nota" {...entrada(0.7)}>
+              <span aria-hidden="true" className="hero__estrelas">
+                ★★★★★
+              </span>
+              <span>
+                <ContadorAnimado valor={nota.valor} decimais={1} /> ·{" "}
+                <ContadorAnimado valor={nota.total} /> {nota.rotulo}
+              </span>
+              {nota.exemplo && <SeloExemplo />}
+            </motion.p>
+          )}
         </div>
 
-        <div className="hero-photo" style={{ position: "relative" }}>
+        <div className="hero__visual">
           <motion.div
             aria-hidden="true"
-            style={{
-              position: "absolute",
-              top: "-10%",
-              right: "-8%",
-              width: "72%",
-              height: "72%",
-              borderRadius: "50%",
-              background: "var(--color-gold)",
-              opacity: 0.35,
-              zIndex: 0,
-              y: decorY,
-            }}
-            animate={
-              prefersReduced
-                ? undefined
-                : { y: [0, -10, 0] }
-            }
-            transition={
-              prefersReduced
-                ? undefined
-                : { duration: 7, repeat: Infinity, ease: "easeInOut" }
-            }
-          />
-          <motion.div
-            style={{ position: "relative", zIndex: 1, y: imageY, maxWidth: 480, marginInline: "auto" }}
-            initial={prefersReduced ? undefined : { opacity: 0, scale: 0.96 }}
-            animate={prefersReduced ? undefined : { opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            className="hero__mancha-paralaxe"
+            style={m.reduzido ? undefined : { y: yMancha }}
           >
-            <PhotoPlaceholder
-              src={hero.image}
-              alt={hero.imageAlt}
-              aspectRatio="1 / 1"
-              objectPosition="center 15%"
-              animateOnMount
-              delay={0.3}
-            />
-
             <motion.div
-              className="hero-sticker"
-              aria-hidden="true"
-              initial={prefersReduced ? undefined : { opacity: 0, scale: 0.6, rotate: -18 }}
+              className="hero__mancha"
+              initial={m.observador ? { opacity: 0, scale: m.reduzido ? 1 : 0.6 } : false}
               animate={
-                prefersReduced
-                  ? undefined
-                  : { opacity: 1, scale: 1, rotate: -8 }
+                m.loops
+                  ? { opacity: 1, scale: 1, y: [0, -10, 0] }
+                  : { opacity: 1, scale: 1 }
               }
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.9 }}
-              style={{
-                position: "absolute",
-                bottom: "-6%",
-                left: "-8%",
-                zIndex: 2,
-                width: "clamp(84px, 14vw, 116px)",
-                height: "clamp(84px, 14vw, 116px)",
-                borderRadius: "50%",
-                background: "var(--color-teal)",
-                color: "var(--color-cream)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center",
-                fontFamily: "var(--font-display)",
-                fontWeight: 600,
-                fontSize: "clamp(11px, 1.6vw, 13px)",
-                lineHeight: 1.2,
-                boxShadow: "0 16px 32px -12px rgba(43,29,20,0.35)",
-                border: "3px solid var(--color-cream)",
-                padding: 8,
+              transition={{
+                opacity: { duration: m.dur(0.8), delay: 0.2 },
+                scale: { duration: m.dur(1), ease: EASE.pop, delay: 0.2 },
+                y: { duration: 7, repeat: Infinity, ease: EASE.sine, delay: 1.4 },
               }}
-            >
-              {!prefersReduced && (
-                <motion.span
-                  aria-hidden="true"
-                  style={{ position: "absolute", inset: -3, borderRadius: "50%" }}
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                />
-              )}
-              carinho
-              <br />
-              garantido
-            </motion.div>
+            />
+          </motion.div>
+
+          <motion.div className="hero__foto" style={m.reduzido ? undefined : { y: yFoto }}>
+            <Foto imagem={imagens.hero} proporcao="1 / 1" posicao="center 15%" prioritaria atraso={0.25} />
+
+            {hero.anotacao && (
+              <motion.p
+                aria-hidden="true"
+                className="hero__anotacao"
+                initial={
+                  m.observador
+                    ? { opacity: 0, scale: m.reduzido ? 1 : 0.5, rotate: m.reduzido ? -8 : -24 }
+                    : false
+                }
+                animate={{ opacity: 1, scale: 1, rotate: -8 }}
+                transition={{ duration: m.dur(0.7), ease: EASE.pop, delay: m.reduzido ? 0 : 0.95 }}
+              >
+                {hero.anotacao}
+              </motion.p>
+            )}
           </motion.div>
         </div>
       </div>
-
-      <style>{`
-        .hero-grid {
-          display: grid;
-          grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-          gap: clamp(32px, 5vw, 64px);
-          align-items: center;
-        }
-        @media (max-width: 1023px) {
-          .hero-grid {
-            grid-template-columns: 1fr;
-            gap: 40px;
-          }
-          .hero-photo {
-            max-width: 420px;
-            width: 100%;
-            margin: 0 auto;
-            order: -1;
-          }
-          .hero-copy {
-            text-align: center;
-          }
-          .hero-subtitle,
-          .hero-cta-row,
-          .hero-rating {
-            margin-left: auto;
-            margin-right: auto;
-            justify-content: center;
-          }
-        }
-        @media (max-width: 600px) {
-          .hero-photo {
-            max-width: 280px;
-          }
-          .hero-sticker {
-            left: 0 !important;
-            bottom: -4% !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }

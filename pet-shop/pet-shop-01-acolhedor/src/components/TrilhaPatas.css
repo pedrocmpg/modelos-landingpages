@@ -1,0 +1,16 @@
+.trilha-patas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 6vw, 56px);
+  margin-bottom: 28px;
+  color: color-mix(in srgb, var(--cor-secundaria) 45%, transparent);
+}
+
+.trilha-patas__pata {
+  display: inline-flex;
+}
+
+.trilha-patas__pata--baixa {
+  margin-top: 14px;
+}

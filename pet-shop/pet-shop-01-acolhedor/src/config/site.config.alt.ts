@@ -64,7 +64,7 @@ export const altConfig: SiteConfig = {
     { id: "sobre", ativo: true, menu: "Quem somos" },
     { id: "servicos", ativo: true, menu: "Tratamentos" },
     { id: "diferenciais", ativo: true, menu: "Vantagens" },
-    { id: "comoFunciona", ativo: true, menu: "Passo a passo" },
+    { id: "comoFunciona", ativo: true, menu: "Etapas" },
     { id: "galeria", ativo: true, menu: "Resultados" },
     { id: "depoimentos", ativo: true, menu: "Opiniões" },
     { id: "faq", ativo: true, menu: "FAQ" },
@@ -123,7 +123,7 @@ export const altConfig: SiteConfig = {
     },
 
     comoFunciona: {
-      eyebrow: "Passo a passo",
+      eyebrow: "Etapas",
       titulo: "Como marcar o seu horário",
       itens: [
         { titulo: "Mande uma mensagem", texto: "Fale pelo WhatsApp de teste.", icone: "mensagem" },

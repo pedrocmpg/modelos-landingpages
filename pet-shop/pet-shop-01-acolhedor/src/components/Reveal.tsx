@@ -1,112 +1,125 @@
-import type { ReactNode } from "react";
-import { motion, useReducedMotion as useMotionReducedMotion } from "motion/react";
-import type { Variants } from "motion/react";
+import { useRef, type ElementType, type ReactNode } from "react";
+import { motion } from "motion/react";
+import { useEmVista } from "../hooks/useEmVista.ts";
+import { EASE, useMovimento, type Movimento } from "../motion/tokens.ts";
 
-type RevealDirection = "up" | "left" | "right" | "scale";
+// Cada tipo de elemento tem a sua própria entrada. Só anima transform,
+// opacity e clip-path.
+//  rise       cartões de conteúdo (sobe com leve rotação)
+//  slideLeft  blocos que entram pela esquerda
+//  slideRight blocos que entram pela direita
+//  pop        decorações e selos (escala com leve overshoot)
+//  wipe       cartões revelados por cortina lateral (clip-path)
+//  fade       só opacidade
+export type TipoEntrada = "rise" | "slideLeft" | "slideRight" | "pop" | "wipe" | "fade";
 
-const DISTANCE = 28;
+type Tag = "div" | "li" | "article" | "blockquote" | "figure";
 
-function getVariants(direction: RevealDirection, rotate: number): Variants {
-  const base = { opacity: 0 };
-  const offsets: Record<RevealDirection, Record<string, number>> = {
-    up: { y: DISTANCE },
-    left: { x: -DISTANCE },
-    right: { x: DISTANCE },
-    scale: { scale: 0.94 },
-  };
+interface Props {
+  children: ReactNode;
+  tipo?: TipoEntrada;
+  /** Atraso em segundos (use escalonar(i) para listas). */
+  atraso?: number;
+  /** Rotação inicial em graus (só no tipo rise). */
+  rotacao?: number;
+  /** Sobrescreve a distância padrão (px) dos tipos rise/slide. */
+  distancia?: number;
+  className?: string;
+  as?: Tag;
+}
 
-  return {
-    hidden: { ...base, ...offsets[direction], rotate },
-    visible: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      scale: 1,
-      rotate: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
+// clip-path com folga negativa para não cortar sombras no estado final.
+const CLIP_FECHADO = "inset(-80px 100% -80px -80px)";
+const CLIP_ABERTO = "inset(-80px -80px -80px -80px)";
+
+function estados(tipo: TipoEntrada, m: Movimento, rotacao: number, distancia?: number) {
+  if (m.reduzido || tipo === "fade") {
+    return { oculto: { opacity: 0 }, visivel: { opacity: 1 } };
+  }
+  const d = (padrao: number) => m.dist(distancia ?? padrao);
+  switch (tipo) {
+    case "rise":
+      return {
+        oculto: { opacity: 0, y: d(32), rotate: rotacao },
+        visivel: { opacity: 1, y: 0, rotate: 0 },
+      };
+    case "slideLeft":
+      return { oculto: { opacity: 0, x: -d(48) }, visivel: { opacity: 1, x: 0 } };
+    case "slideRight":
+      return { oculto: { opacity: 0, x: d(48) }, visivel: { opacity: 1, x: 0 } };
+    case "pop":
+      return {
+        oculto: { opacity: 0, scale: m.suave ? 0.92 : 0.8 },
+        visivel: { opacity: 1, scale: 1 },
+      };
+    case "wipe":
+      return {
+        oculto: { opacity: 0, clipPath: CLIP_FECHADO },
+        visivel: { opacity: 1, clipPath: CLIP_ABERTO },
+      };
+  }
+}
+
+function transicao(tipo: TipoEntrada, m: Movimento, atraso: number) {
+  if (m.reduzido) return { duration: m.dur(0.25), ease: EASE.enter };
+  switch (tipo) {
+    case "pop":
+      return { duration: m.dur(0.6), ease: EASE.pop, delay: atraso };
+    case "wipe":
+      return { duration: m.dur(0.9), ease: EASE.inOut, delay: atraso };
+    case "fade":
+      return { duration: m.dur(0.6), ease: EASE.enter, delay: atraso };
+    default:
+      return { duration: m.dur(0.8), ease: EASE.enter, delay: atraso };
+  }
 }
 
 export function Reveal({
   children,
-  direction = "up",
-  delay = 0,
-  rotate = 0,
+  tipo = "rise",
+  atraso = 0,
+  rotacao = 0,
+  distancia,
   className,
   as = "div",
-  once = true,
-  amount = 0.2,
-}: {
-  children: ReactNode;
-  direction?: RevealDirection;
-  delay?: number;
-  rotate?: number;
-  className?: string;
-  as?: "div" | "li" | "article";
-  once?: boolean;
-  amount?: number;
-}) {
-  const prefersReduced = useMotionReducedMotion();
-  const MotionTag = motion[as];
+}: Props) {
+  const m = useMovimento();
+  const ref = useRef<HTMLElement>(null);
+  const emVista = useEmVista(ref, 0.2);
 
-  if (prefersReduced) {
+  // Sem IntersectionObserver: nada de estado oculto.
+  const Externo = as as ElementType;
+  if (!m.observador) return <Externo className={className}>{children}</Externo>;
+
+  const { oculto, visivel } = estados(tipo, m, rotacao, distancia);
+  const MotionTag = motion[as] as typeof motion.div;
+
+  // clip-path: o IntersectionObserver não dispara em um elemento recortado por
+  // ele mesmo. Então o contêiner externo (sem recorte) é observado e o interno anima.
+  if (tipo === "wipe" && !m.reduzido) {
     return (
-      <motion.div
-        className={className}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once, amount: 0.1 }}
-        transition={{ duration: 0.4 }}
-      >
-        {children}
-      </motion.div>
+      <Externo className={className} ref={ref}>
+        <motion.div
+          style={{ display: "flex", flexDirection: "column", flex: 1, height: "100%" }}
+          initial={oculto}
+          animate={emVista ? visivel : oculto}
+          transition={transicao(tipo, m, atraso)}
+        >
+          {children}
+        </motion.div>
+      </Externo>
     );
   }
 
   return (
     <MotionTag
+      ref={ref as React.Ref<HTMLDivElement>}
       className={className}
-      variants={getVariants(direction, rotate)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once, amount }}
-      transition={{ delay }}
+      initial={oculto}
+      animate={emVista ? visivel : oculto}
+      transition={transicao(tipo, m, atraso)}
     >
       {children}
     </MotionTag>
-  );
-}
-
-export function RevealGroup({
-  children,
-  className,
-  style,
-  stagger = 0.09,
-}: {
-  children: ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
-  stagger?: number;
-}) {
-  return (
-    <motion.div
-      className={className}
-      style={style}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
-      variants={{
-        hidden: {},
-        visible: {
-          transition: { staggerChildren: stagger },
-        },
-      }}
-    >
-      {children}
-    </motion.div>
   );
 }

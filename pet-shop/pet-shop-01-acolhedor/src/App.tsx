@@ -1,36 +1,69 @@
-import { useLenis } from "./hooks/useLenis";
-import { Header } from "./components/Header";
-import { Hero } from "./components/Hero";
-import { WhyTheyReturn } from "./components/WhyTheyReturn";
-import { Services } from "./components/Services";
-import { PetGallery } from "./components/PetGallery";
-import { Reviews } from "./components/Reviews";
-import { Contact } from "./components/Contact";
-import { Footer } from "./components/Footer";
-import { WhatsappFloatButton } from "./components/WhatsappFloatButton";
-import { ScrollProgressBar } from "./components/ScrollProgressBar";
+import type { ComponentType } from "react";
+import type { SecaoId, SiteConfig } from "./config/types.ts";
+import { BarraProgresso } from "./components/BarraProgresso.tsx";
+import { BarraWhatsapp, BotaoWhatsappFlutuante } from "./components/BotoesWhatsapp.tsx";
+import { ComoFunciona } from "./components/ComoFunciona.tsx";
+import { Contato } from "./components/Contato.tsx";
+import { CtaFinal } from "./components/CtaFinal.tsx";
+import { Depoimentos } from "./components/Depoimentos.tsx";
+import { Diferenciais } from "./components/Diferenciais.tsx";
+import { Faq } from "./components/Faq.tsx";
+import { Galeria } from "./components/Galeria.tsx";
+import { Header } from "./components/Header.tsx";
+import { Hero } from "./components/Hero.tsx";
+import { Rodape } from "./components/Rodape.tsx";
+import { Servicos } from "./components/Servicos.tsx";
+import { Sobre } from "./components/Sobre.tsx";
+import { ConfigContext, useConfig } from "./context/configContext.ts";
+import { useDocumentHead } from "./hooks/useDocumentHead.ts";
+import { useLenis } from "./hooks/useLenis.ts";
 
-function App() {
+const SECOES: Record<SecaoId, ComponentType> = {
+  hero: Hero,
+  sobre: Sobre,
+  diferenciais: Diferenciais,
+  servicos: Servicos,
+  comoFunciona: ComoFunciona,
+  galeria: Galeria,
+  depoimentos: Depoimentos,
+  faq: Faq,
+  ctaFinal: CtaFinal,
+  contato: Contato,
+};
+
+function Pagina() {
+  const { secoes, conteudo } = useConfig();
   useLenis();
 
   return (
     <>
-      <a href="#main" className="skip-link">
-        Pular para o conteúdo
+      <a href="#conteudo" className="pular-conteudo">
+        {conteudo.rotulos.pularParaConteudo}
       </a>
-      <ScrollProgressBar />
+      <BarraProgresso />
       <Header />
-      <main id="main">
-        <Hero />
-        <WhyTheyReturn />
-        <Services />
-        <PetGallery />
-        <Reviews />
-        <Contact />
+      <main id="conteudo" tabIndex={-1}>
+        {secoes
+          .filter((s) => s.ativo)
+          .map((s) => {
+            const Secao = SECOES[s.id];
+            return <Secao key={s.id} />;
+          })}
       </main>
-      <Footer />
-      <WhatsappFloatButton />
+      <Rodape />
+      <BotaoWhatsappFlutuante />
+      <BarraWhatsapp />
     </>
+  );
+}
+
+/** O site inteiro é função do config: nada é lido de outro lugar. */
+function App({ config }: { config: SiteConfig }) {
+  useDocumentHead(config);
+  return (
+    <ConfigContext value={config}>
+      <Pagina />
+    </ConfigContext>
   );
 }
 

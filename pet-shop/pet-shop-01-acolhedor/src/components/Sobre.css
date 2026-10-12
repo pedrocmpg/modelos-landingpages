@@ -1,0 +1,31 @@
+.sobre__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(32px, 6vw, 80px);
+  align-items: center;
+}
+
+.sobre__grade--sem-imagem {
+  grid-template-columns: minmax(0, 720px);
+}
+
+.sobre__paragrafos {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 28px;
+  color: var(--cor-texto-secundario);
+  font-size: 18px;
+}
+
+.sobre__imagem {
+  width: 100%;
+  max-width: 440px;
+  margin-inline: auto;
+}
+
+@media (max-width: 900px) {
+  .sobre__grade {
+    grid-template-columns: 1fr;
+  }
+}
