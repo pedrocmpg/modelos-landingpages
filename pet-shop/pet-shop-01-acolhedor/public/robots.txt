@@ -1,4 +1,0 @@
-# DEMO: este site ainda não foi entregue ao cliente — bloqueia todos os robôs de busca.
-# REMOVER (ou reescrever liberando indexação) quando o Golden Pet Shop aprovar a publicação final.
-User-agent: *
-Disallow: /
