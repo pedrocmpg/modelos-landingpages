@@ -1,0 +1,25 @@
+.foto {
+  position: relative;
+}
+
+/* Arco: topo semicircular, base reta. A sombra fica no contêiner externo. */
+.foto__quadro {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 999px 999px var(--raio-cartao) var(--raio-cartao);
+  background: var(--cor-suave);
+}
+
+.foto__imagem {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.foto__selo {
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  transform: translateX(-50%);
+}

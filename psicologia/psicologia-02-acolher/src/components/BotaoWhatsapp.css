@@ -1,0 +1,22 @@
+.whatsapp-flutuante {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--cor-primaria);
+  color: var(--cor-fundo);
+  box-shadow: 0 10px 24px -10px var(--cor-sombra);
+  transition: transform 0.4s var(--ease-enter);
+}
+
+@media (hover: hover) {
+  .whatsapp-flutuante:hover {
+    transform: translateY(-3px);
+  }
+}

@@ -1,0 +1,39 @@
+/* Máscara: recorta o que ainda está abaixo da linha. O respiro embaixo e nas
+   laterais (com margem negativa para não mexer no layout) evita cortar
+   descendentes e o itálico. */
+.linhas__mascara {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.04em 0.1em 0.2em;
+  margin: -0.04em -0.1em -0.2em;
+}
+
+.linhas__palavra {
+  display: inline-block;
+}
+
+.linhas--animado .linhas__palavra {
+  transform: translateY(112%);
+  transition: transform var(--duracao) cubic-bezier(0.22, 1, 0.36, 1)
+    calc(var(--atraso) + var(--linha, 0) * var(--intervalo));
+}
+
+.linhas--animado.linhas--ativo .linhas__palavra {
+  transform: translateY(0);
+}
+
+/* Movimento reduzido: sem máscara, só um fade curto. */
+.linhas--reduzido .linhas__mascara {
+  overflow: visible;
+}
+
+.linhas--reduzido.linhas--animado .linhas__palavra {
+  transform: none;
+  opacity: 0;
+  transition: opacity 0.25s linear;
+}
+
+.linhas--reduzido.linhas--animado.linhas--ativo .linhas__palavra {
+  opacity: 1;
+}

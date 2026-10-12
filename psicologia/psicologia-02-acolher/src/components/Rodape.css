@@ -1,0 +1,87 @@
+.rodape {
+  position: relative;
+  padding: clamp(56px, 8vw, 96px) 0 clamp(32px, 4vw, 48px);
+  background: var(--cor-escuro);
+  color: var(--cor-fundo);
+}
+
+.rodape__grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) auto auto;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: start;
+}
+
+.rodape__nome {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(28px, 3.4vw, 40px);
+  line-height: 1.1;
+}
+
+.rodape__registro {
+  margin-top: 8px;
+  color: var(--cor-suave);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.rodape__slogan {
+  max-width: 36ch;
+  margin-top: 14px;
+  color: var(--cor-texto-escuro-atenuado);
+}
+
+.rodape__nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.rodape__link {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 44px;
+  color: var(--cor-suave);
+}
+
+.rodape__redes {
+  display: flex;
+  gap: 8px;
+}
+
+.rodape__rede {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--cor-texto-escuro-atenuado);
+  border-radius: 50%;
+  color: var(--cor-suave);
+}
+
+.rodape__legal {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: clamp(36px, 5vw, 56px);
+  padding-top: 24px;
+  border-top: 1px solid color-mix(in srgb, var(--cor-fundo) 20%, transparent);
+  color: var(--cor-texto-escuro-atenuado);
+  font-size: 14.5px;
+}
+
+@media (max-width: 820px) {
+  .rodape__grade {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Espaço para o botão flutuante de WhatsApp não cobrir o texto final. */
+@media (max-width: 767px) {
+  .rodape {
+    padding-bottom: 88px;
+  }
+}
