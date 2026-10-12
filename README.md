@@ -10,10 +10,13 @@ publique.
 
 | Nicho | Modelo | Estilo | Demo |
 | --- | --- | --- | --- |
-| Pet shop | [`pet-shop/pet-shop-01-acolhedor`](pet-shop/pet-shop-01-acolhedor) | Acolhedor: creme, marrom e dourado; Fraunces + DM Sans + Caveat | (ainda não publicado) |
-| Psicologia | [`psicologia/psicologia-01-serena`](psicologia/psicologia-01-serena) | Serena ("luz da manhã"): areia, sálvia e argila; Instrument Serif + Hanken Grotesk | (ainda não publicado) |
-| Psicologia | [`psicologia/psicologia-02-acolher`](psicologia/psicologia-02-acolher) | Acolher ("fim de tarde"): areia, musgo e terracota, layout de revista; Gloock + Onest + Newsreader | (ainda não publicado) |
+| Pet shop | [`pet-shop/pet-shop-01-acolhedor`](pet-shop/pet-shop-01-acolhedor) | Acolhedor: creme, marrom e dourado; Fraunces + DM Sans + Caveat | [demo](https://modelo-pet-shop-01-acolhedor.vercel.app) |
+| Psicologia | [`psicologia/psicologia-01-serena`](psicologia/psicologia-01-serena) | Serena ("luz da manhã"): areia, sálvia e argila; Instrument Serif + Hanken Grotesk | [demo](https://modelo-psicologia-01-serena.vercel.app) |
+| Psicologia | [`psicologia/psicologia-02-acolher`](psicologia/psicologia-02-acolher) | Acolher ("fim de tarde"): areia, musgo e terracota, layout de revista; Gloock + Onest + Newsreader | [demo](https://modelo-psicologia-02-acolher.vercel.app) |
 | Fisioterapia | [`fisioterapia/`](fisioterapia) | — | em breve |
+
+As demos ficam na Vercel (plano Hobby, só para demonstração, com `noindex`). Sites de clientes
+vão para Cloudflare Pages ou Netlify.
 
 ## Criar o site de um cliente
 
