@@ -58,9 +58,27 @@ describe("HTML do build (sem JavaScript)", () => {
     expect(metaPorPropriedade("name", "twitter:image:alt")).toBe(meta.ogImageAlt);
   });
 
-  it("a URL absoluta da imagem do cartão aponta para um arquivo que o build publicou", () => {
-    const caminho = new URL(imagem).pathname;
-    expect(statSync(join(saida, caminho)).isFile()).toBe(true);
+  it("traz título, descrição e theme-color no <head>", () => {
+    expect(doc.title).toBe(meta.title);
+    expect(metaPorPropriedade("name", "description")).toBe(meta.description);
+    expect(metaPorPropriedade("name", "theme-color")).toBe(meta.themeColor);
+  });
+
+  it("og:image e twitter:image são URLs absolutas https", () => {
+    for (const url of [metaPorPropriedade("property", "og:image"), metaPorPropriedade("name", "twitter:image")]) {
+      expect(url).toMatch(/^https:\/\/[^/\s]+\/\S+\.(png|jpe?g)$/i);
+    }
+    expect(meta.url).toMatch(/^https:\/\//);
+  });
+
+  it("a imagem do cartão publicada em dist/ existe, tem 1200x630 e menos de 300 KB", () => {
+    const arquivo = join(saida, new URL(imagem).pathname);
+    expect(statSync(arquivo).isFile()).toBe(true);
+    const bytes = readFileSync(arquivo);
+    expect(bytes.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
+    expect(bytes.readUInt32BE(16)).toBe(1200);
+    expect(bytes.readUInt32BE(20)).toBe(630);
+    expect(bytes.length).toBeLessThan(300 * 1024);
   });
 
   it("<meta robots noindex> segue meta.noindex e o robots.txt libera os rastreadores", () => {
