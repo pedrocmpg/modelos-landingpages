@@ -50,6 +50,12 @@ export interface Meta {
   ogImage: string;
   /** Texto alternativo da imagem do cartão. */
   ogImageAlt: string;
+  /** Nome do site no cartão (og:site_name). Normalmente o nome do negócio. */
+  siteName: string;
+  /** Idioma do cartão no formato do Open Graph (og:locale), ex.: "pt_BR". */
+  locale: string;
+  /** Cor da barra do navegador no celular (theme-color). Normalmente a cor de fundo. */
+  themeColor: string;
 }
 
 export interface Negocio {

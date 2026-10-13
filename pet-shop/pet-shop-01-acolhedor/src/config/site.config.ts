@@ -20,6 +20,9 @@ export const siteConfig: SiteConfig = {
       "Exemplo de landing page para pet shop (estilo Acolhedor), com dados fictícios. É um modelo de demonstração, não um site real.",
     ogImage: "/og-image.png",
     ogImageAlt: "Início do modelo de site para pet shop (estilo Acolhedor), com o título do cartão: Modelo de site para pet shop — exemplo",
+    siteName: "Pet Shop Exemplo",
+    locale: "pt_BR",
+    themeColor: "#FFF6E5",
   },
 
   negocio: {

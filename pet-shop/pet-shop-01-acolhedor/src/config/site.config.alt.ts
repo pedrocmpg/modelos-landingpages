@@ -15,6 +15,9 @@ export const altConfig: SiteConfig = {
     ogDescription: "Descrição alternativa do cartão de compartilhamento (teste).",
     ogImage: "/images/pet-1-puppy.jpg",
     ogImageAlt: "Imagem alternativa de compartilhamento",
+    siteName: "Casa dos Bichos Teste",
+    locale: "pt_PT",
+    themeColor: "#FFF4E0",
   },
 
   negocio: {

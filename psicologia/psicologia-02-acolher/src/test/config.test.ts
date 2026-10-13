@@ -139,7 +139,12 @@ describe("head e robots", () => {
     const { meta } = config;
     const imagem = new URL(meta.ogImage, meta.url).toString();
     const esperadas = [
+      `<title>${meta.title}</title>`,
+      `<meta name="description" content="${meta.description}" />`,
+      `<meta name="theme-color" content="${meta.themeColor}" />`,
       '<meta property="og:type" content="website" />',
+      `<meta property="og:site_name" content="${meta.siteName}" />`,
+      `<meta property="og:locale" content="${meta.locale}" />`,
       `<meta property="og:title" content="${meta.ogTitle}" />`,
       `<meta property="og:description" content="${meta.ogDescription}" />`,
       `<meta property="og:url" content="${meta.url}" />`,
@@ -169,6 +174,24 @@ describe("head e robots", () => {
     const cfg = structuredClone(siteConfig);
     cfg.meta.url = "isto-nao-e-uma-url";
     expect(() => renderHeadTags(cfg)).toThrow(/meta\.url/);
+  });
+
+  it("o config alternativo muda todos os valores do head e do cartão", () => {
+    const principal = renderHeadTags(siteConfig);
+    const alternativo = renderHeadTags(altConfig);
+    const campos = ["title", "description", "url", "ogTitle", "ogDescription", "ogImage", "ogImageAlt", "siteName", "locale", "themeColor"] as const;
+    for (const campo of campos) {
+      expect(altConfig.meta[campo], campo).not.toBe(siteConfig.meta[campo]);
+    }
+    expect(alternativo).toContain(`<meta property="og:site_name" content="${altConfig.meta.siteName}" />`);
+    expect(alternativo).toContain(`<meta property="og:locale" content="${altConfig.meta.locale}" />`);
+    expect(alternativo).toContain(`<meta name="theme-color" content="${altConfig.meta.themeColor}" />`);
+    expect(alternativo).toContain(`<meta property="og:image" content="${new URL(altConfig.meta.ogImage, altConfig.meta.url).toString()}" />`);
+    // Nada do config principal sobra no head do alternativo.
+    for (const campo of ["title", "ogTitle", "ogDescription", "ogImageAlt", "siteName", "themeColor"] as const) {
+      expect(alternativo, campo).not.toContain(siteConfig.meta[campo]);
+    }
+    expect(principal).toContain(siteConfig.meta.siteName);
   });
 
   it("escapa HTML dos textos do config", () => {

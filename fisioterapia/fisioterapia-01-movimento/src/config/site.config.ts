@@ -27,6 +27,9 @@ const siteConfig: SiteConfig = {
       "Exemplo de landing page para fisioterapia (estilo Movimento), com dados fictícios. É um modelo de demonstração, não um site real.",
     ogImage: "/og-image.png",
     ogImageAlt: "Início do modelo de site para fisioterapia (estilo Movimento), com o título do cartão: Modelo de site para fisioterapia — exemplo",
+    siteName: "Fisioterapeuta João Exemplo",
+    locale: "pt_BR",
+    themeColor: "#F5F8F7",
   },
 
   negocio: {

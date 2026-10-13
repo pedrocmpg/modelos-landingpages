@@ -15,11 +15,6 @@ export function escapeHtml(texto: string): string {
     .replace(/"/g, "&quot;");
 }
 
-/** "pt-BR" -> "pt_BR" (formato do og:locale). */
-function ogLocale(lang: string): string {
-  return lang.replace("-", "_");
-}
-
 /** Largura e altura do cartão de compartilhamento (padrão de og:image). */
 export const OG_LARGURA = 1200;
 export const OG_ALTURA = 630;
@@ -36,12 +31,12 @@ function urlAbsoluta(caminho: string, base: string): string {
 }
 
 export function renderHeadTags(config: SiteConfig): string {
-  const { meta, negocio, tema } = config;
+  const { meta, tema } = config;
   const e = escapeHtml;
   const tags: string[] = [
     `<title>${e(meta.title)}</title>`,
     `<meta name="description" content="${e(meta.description)}" />`,
-    `<meta name="theme-color" content="${e(tema.cores.fundo)}" />`,
+    `<meta name="theme-color" content="${e(meta.themeColor)}" />`,
   ];
 
   if (meta.noindex) {
@@ -52,10 +47,10 @@ export function renderHeadTags(config: SiteConfig): string {
   tags.push(
     `<link rel="canonical" href="${e(meta.url)}" />`,
     `<meta property="og:type" content="website" />`,
-    `<meta property="og:site_name" content="${e(negocio.nome)}" />`,
+    `<meta property="og:site_name" content="${e(meta.siteName)}" />`,
     `<meta property="og:title" content="${e(meta.ogTitle)}" />`,
     `<meta property="og:description" content="${e(meta.ogDescription)}" />`,
-    `<meta property="og:locale" content="${e(ogLocale(meta.lang))}" />`,
+    `<meta property="og:locale" content="${e(meta.locale)}" />`,
     `<meta property="og:url" content="${e(meta.url)}" />`,
     `<meta property="og:image" content="${e(imagem)}" />`,
     `<meta property="og:image:width" content="${OG_LARGURA}" />`,

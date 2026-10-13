@@ -23,6 +23,9 @@ const siteConfig: SiteConfig = {
       "Exemplo de landing page para psicologia (estilo Serena), com dados fictícios. É um modelo de demonstração, não um site real.",
     ogImage: "/og-image.png",
     ogImageAlt: "Início do modelo de site para psicologia (estilo Serena), com o título do cartão: Modelo de site para psicologia — exemplo",
+    siteName: "Psicóloga Clara Exemplo",
+    locale: "pt_BR",
+    themeColor: "#F7F4EE",
   },
 
   negocio: {

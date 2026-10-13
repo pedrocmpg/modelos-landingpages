@@ -23,6 +23,9 @@ const siteConfig: SiteConfig = {
       "Exemplo de landing page para psicologia (estilo Acolher), com dados fictícios. É um modelo de demonstração, não um site real.",
     ogImage: "/og-image.png",
     ogImageAlt: "Início do modelo de site para psicologia (estilo Acolher), com o título do cartão: Modelo de site para psicologia — exemplo",
+    siteName: "Psicóloga Clara Exemplo",
+    locale: "pt_BR",
+    themeColor: "#F2EBE3",
   },
 
   negocio: {

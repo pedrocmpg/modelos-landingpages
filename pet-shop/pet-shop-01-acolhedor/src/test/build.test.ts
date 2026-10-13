@@ -46,7 +46,8 @@ describe("HTML do build (sem JavaScript)", () => {
     expect(metaPorPropriedade("property", "og:image:width")).toBe("1200");
     expect(metaPorPropriedade("property", "og:image:height")).toBe("630");
     expect(metaPorPropriedade("property", "og:image:alt")).toBe(meta.ogImageAlt);
-    expect(metaPorPropriedade("property", "og:locale")).toBe("pt_BR");
+    expect(metaPorPropriedade("property", "og:locale")).toBe(meta.locale);
+    expect(metaPorPropriedade("property", "og:site_name")).toBe(meta.siteName);
   });
 
   it("traz as tags do Twitter no <head>", () => {
