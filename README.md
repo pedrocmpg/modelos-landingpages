@@ -26,8 +26,8 @@ vão para Cloudflare Pages ou Netlify.
   ficam em [`vitrine/vitrine.config.mjs`](vitrine/vitrine.config.mjs). Veja o
   [README da vitrine](vitrine/README.md).
 - [`ferramentas/`](ferramentas) tem os scripts da raiz (os modelos continuam independentes):
-  `npm run og` gera a `og-image.png` de cada modelo (captura do hero no Chrome, 1200x630,
-  < 300 KB) e as capturas da vitrine; `npm run vitrine` escreve o `index.html` da vitrine;
+  `npm run og` roda o `npm run og` de cada modelo (a `og-image.png` dele: captura do hero no Chrome,
+  1200x630, < 300 KB, com selo "Exemplo") e refaz as capturas da vitrine; `npm run vitrine` escreve o `index.html` da vitrine;
   `npm test` confere a vitrine. Uma vez: `cd ferramentas && npm install`.
 
 ## Criar o site de um cliente
@@ -59,7 +59,7 @@ vão para Cloudflare Pages ou Netlify.
 - [ ] **Config trocado**: nome, slogan, WhatsApp (só dígitos, com 55), telefone, e-mail,
   endereço, horários, redes, textos, serviços/preços, FAQ. Nenhum dado "Exemplo" sobrando.
 - [ ] **Imagens trocadas** em `public/images/` com `alt` descritivo; selos "exemplo"
-  removidos (`exemplo: true` → apagar). Favicon (`public/favicon.svg`) trocado.
+  removidos (`exemplo: true` → apagar). Ícones: saem da cor primária no build (nada a trocar).
 - [ ] **Depoimentos e nota reais** (ou bloco removido; em psicologia não há depoimentos) e
   mapa do endereço certo.
 - [ ] **`noindex` removido**: `meta.noindex: false` (tira o `<meta robots>`; o `robots.txt` já libera os rastreadores) e

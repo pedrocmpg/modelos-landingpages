@@ -72,6 +72,9 @@ seções ligadas) e confere que nada do config principal sobrou na página.
 | `meta.ogDescription` | texto | Descrição do cartão (`og:description`, `twitter:description`). |
 | `meta.ogImage` | caminho | Imagem do cartão, 1200x630: caminho a partir de `public/` (ex.: `/og-image.png`) ou URL absoluta. |
 | `meta.ogImageAlt` | texto | Texto alternativo da imagem do cartão. |
+| `meta.siteName` | texto | Nome do site no cartão (`og:site_name`). Normalmente o nome do negócio. |
+| `meta.locale` | texto | Idioma do cartão no formato do Open Graph (`og:locale`), ex.: `pt_BR`. |
+| `meta.themeColor` | `#RRGGBB` | Cor da barra do navegador no celular (`theme-color`). Normalmente a cor de fundo. |
 | `negocio.nome` | texto | Nome da profissional (cabeçalho, rodapé, Open Graph). |
 | `negocio.slogan` | texto | Frase curta no rodapé. |
 | `negocio.cidade` / `negocio.estado` | texto | Localização. |
@@ -116,11 +119,29 @@ Ao colar o link no WhatsApp, Instagram, LinkedIn ou X, o cartão sai das tags `o
 a partir de `meta.*` e já estão no `index.html` entregue: nada é inserido por JavaScript no
 navegador (um teste confere o HTML do build e que o JS entregue não tem essas tags).
 
-- **Imagem:** `public/og-image.png`, 1200x630, abaixo de 300 KB (um teste confere). Nos modelos
-  deste repositório ela é uma captura do hero com o título "Modelo de site para [nicho] —
-  exemplo", gerada por `ferramentas/gerar-og.mjs` (`npm run og` em `../../ferramentas`).
-  **Em um site de cliente, troque por uma imagem do próprio negócio** (a foto principal ou uma
-  arte), sem dados de exemplo.
+- **Imagem:** `public/og-image.png`, PNG 1200x630 abaixo de 300 KB (um teste confere o arquivo
+  e a cópia em `dist/`). Nos modelos deste repositório ela é uma captura do hero com o título
+  "Modelo de site para [nicho] — exemplo" e o selo "Exemplo", gerada por **`npm run og`**
+  (`scripts/gerar-og.mjs`: builda, abre no Chrome via Playwright, espera as animações, desenha a
+  faixa só na captura e comprime). Rode de novo sempre que o hero mudar.
+- **Ícones:** `favicon.svg`, `favicon-32.png` e `apple-touch-icon.png` (180x180) são **gerados no
+  build** a partir de `tema.cores.primaria`; não existe arquivo de ícone para editar. Trocou a
+  cor primária, o próximo build já sai com os ícones novos.
+
+#### Trocar para um cliente
+
+1. `meta.url`: o endereço final do site, com `https://` e barra final (ex.:
+   `https://www.clientelegal.com.br/`). Ele vira `og:url`, `canonical` e a base da URL absoluta
+   da imagem; se for inválido o build falha.
+2. `meta.ogTitle`, `meta.ogDescription`, `meta.ogImageAlt`, `meta.siteName`: os textos do cliente
+   (o título e a descrição de exemplo não podem sobrar).
+3. Imagem do cartão: o jeito mais seguro é colocar em `public/og-image.png` uma imagem do próprio
+   negócio, 1200x630, PNG ou JPEG (nunca SVG nem GIF) e abaixo de 300 KB, e ajustar
+   `meta.ogImage` se mudar o nome. Se preferir gerar pelo script, tire o selo
+   (`const SELO = ""` em `scripts/gerar-og.mjs`) e rode `npm run og` com o site já com os dados
+   do cliente. O teste de build reprova imagem fora de 1200x630 ou acima de 300 KB.
+4. `meta.themeColor` (cor da barra no celular) e `tema.cores.primaria` (ícones).
+5. `meta.noindex: false` quando o site for ao ar.
 - **`meta.noindex`** controla só o `<meta robots noindex, nofollow>`. O `robots.txt` sempre
   libera os rastreadores, senão WhatsApp, LinkedIn e Meta não leriam o cartão.
 - O cache dos cartões é do próprio WhatsApp/Meta: depois de trocar a imagem, use o depurador
@@ -183,7 +204,7 @@ clientes: ele é só para uso não comercial.
 - [ ] Trocar as fotos de ambiente e os `alt`; colocar a foto da profissional **só com
       autorização dela(e)** (ou manter o placeholder); remover `exemplo: true`.
 - [ ] Trocar o mapa (`mapaEmbedUrl`) e conferir o link do WhatsApp no celular.
-- [ ] Ajustar `public/favicon.svg`.
+- [ ] Conferir os ícones (gerados da cor primária no build: `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png`).
 - [ ] `meta.noindex: false`, `meta.url` com o domínio final (com barra final) e `meta.ogTitle`,
   `meta.ogDescription`, `meta.ogImageAlt` do cliente; `public/og-image.png` trocada por uma
   imagem 1200x630 (< 300 KB) do negócio.
