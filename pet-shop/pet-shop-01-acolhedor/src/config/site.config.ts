@@ -14,7 +14,7 @@ export const siteConfig: SiteConfig = {
     // Mude para false ao entregar o site ao cliente.
     noindex: true,
     // Cartão de compartilhamento (WhatsApp, Instagram, LinkedIn, X). Gerado no build.
-    url: "https://modelo-pet-shop-01-acolhedor.vercel.app/",
+    url: "https://modelo-pet-shop-acolhedor.vercel.app/",
     ogTitle: "Modelo de site para pet shop — exemplo",
     ogDescription:
       "Exemplo de landing page para pet shop (estilo Acolhedor), com dados fictícios. É um modelo de demonstração, não um site real.",

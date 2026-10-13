@@ -10,11 +10,11 @@ publique.
 
 | Nicho | Modelo | Estilo | Demo |
 | --- | --- | --- | --- |
-| Pet shop | [`pet-shop/pet-shop-01-acolhedor`](pet-shop/pet-shop-01-acolhedor) | Acolhedor: creme, marrom e dourado; Fraunces + DM Sans + Caveat | [demo](https://modelo-pet-shop-01-acolhedor.vercel.app) |
-| Psicologia | [`psicologia/psicologia-01-serena`](psicologia/psicologia-01-serena) | Serena ("luz da manhã"): areia, sálvia e argila; Instrument Serif + Hanken Grotesk | [demo](https://modelo-psicologia-01-serena.vercel.app) |
-| Psicologia | [`psicologia/psicologia-02-acolher`](psicologia/psicologia-02-acolher) | Acolher ("fim de tarde"): areia, musgo e terracota, layout de revista; Gloock + Onest + Newsreader | [demo](https://modelo-psicologia-02-acolher.vercel.app) |
-| Fisioterapia | [`fisioterapia/fisioterapia-01-movimento`](fisioterapia/fisioterapia-01-movimento) | Movimento ("reabilitação calma"): verde-petróleo e terracota, linhas de coluna e trajetória em SVG; Bricolage Grotesque + Instrument Sans | [demo](https://modelo-fisioterapia-01-movimento.vercel.app) |
-| Fisioterapia | [`fisioterapia/fisioterapia-02-ativa`](fisioterapia/fisioterapia-02-ativa) | Ativa ("ortopedia e esporte"): cobalto e lima sobre escuro, grade marcada, faixa contínua; Unbounded + Figtree + IBM Plex Mono | [demo](https://modelo-fisioterapia-02-ativa.vercel.app) |
+| Pet shop | [`pet-shop/pet-shop-01-acolhedor`](pet-shop/pet-shop-01-acolhedor) | Acolhedor: creme, marrom e dourado; Fraunces + DM Sans + Caveat | [demo](https://modelo-pet-shop-acolhedor.vercel.app) |
+| Psicologia | [`psicologia/psicologia-01-serena`](psicologia/psicologia-01-serena) | Serena ("luz da manhã"): areia, sálvia e argila; Instrument Serif + Hanken Grotesk | [demo](https://modelo-psicologia-serena.vercel.app) |
+| Psicologia | [`psicologia/psicologia-02-acolher`](psicologia/psicologia-02-acolher) | Acolher ("fim de tarde"): areia, musgo e terracota, layout de revista; Gloock + Onest + Newsreader | [demo](https://modelo-psicologia-acolher.vercel.app) |
+| Fisioterapia | [`fisioterapia/fisioterapia-01-movimento`](fisioterapia/fisioterapia-01-movimento) | Movimento ("reabilitação calma"): verde-petróleo e terracota, linhas de coluna e trajetória em SVG; Bricolage Grotesque + Instrument Sans | [demo](https://modelo-fisioterapia-movimento.vercel.app) |
+| Fisioterapia | [`fisioterapia/fisioterapia-02-ativa`](fisioterapia/fisioterapia-02-ativa) | Ativa ("ortopedia e esporte"): cobalto e lima sobre escuro, grade marcada, faixa contínua; Unbounded + Figtree + IBM Plex Mono | [demo](https://modelo-fisioterapia-ativa.vercel.app) |
 
 As demos ficam na Vercel (plano Hobby, só para demonstração, com `noindex`). Sites de clientes
 vão para Cloudflare Pages ou Netlify.

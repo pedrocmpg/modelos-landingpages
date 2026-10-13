@@ -24,7 +24,7 @@ const siteConfig: SiteConfig = {
     lang: "pt-BR",
     noindex: true,
     // Cartão de compartilhamento (WhatsApp, Instagram, LinkedIn, X). Gerado no build.
-    url: "https://modelo-fisioterapia-02-ativa.vercel.app/",
+    url: "https://modelo-fisioterapia-ativa.vercel.app/",
     ogTitle: "Modelo de site para fisioterapia — exemplo",
     ogDescription:
       "Exemplo de landing page para fisioterapia (estilo Ativa), com dados fictícios. É um modelo de demonstração, não um site real.",

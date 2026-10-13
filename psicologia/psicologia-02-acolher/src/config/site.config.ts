@@ -17,7 +17,7 @@ const siteConfig: SiteConfig = {
     lang: "pt-BR",
     noindex: true,
     // Cartão de compartilhamento (WhatsApp, Instagram, LinkedIn, X). Gerado no build.
-    url: "https://modelo-psicologia-02-acolher.vercel.app/",
+    url: "https://modelo-psicologia-acolher.vercel.app/",
     ogTitle: "Modelo de site para psicologia — exemplo",
     ogDescription:
       "Exemplo de landing page para psicologia (estilo Acolher), com dados fictícios. É um modelo de demonstração, não um site real.",
