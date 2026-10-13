@@ -19,6 +19,14 @@ publique.
 As demos ficam na Vercel (plano Hobby, só para demonstração, com `noindex`). Sites de clientes
 vão para Cloudflare Pages ou Netlify.
 
+**Deploy automático das demos:** cada demo é um projeto da Vercel ligado a este repositório
+(`pedrocmpg/modelos-landingpages`, branch `master`), com o *Root Directory* na pasta do modelo
+(ex.: `psicologia/psicologia-01-serena`). Um `git push` na `master` faz o deploy de produção de
+cada demo. Com o Root Directory definido, **não rode `vercel deploy` dentro da pasta do modelo**
+(o CLI procura a subpasta dentro dela e falha); para um deploy manual, faça push ou use
+"Redeploy" no painel da Vercel. Os domínios das demos são `modelo-<nicho>-<estilo>.vercel.app`
+(sem o número do modelo).
+
 ## Vitrine e ferramentas
 
 - [`vitrine/`](vitrine) é uma página estática (sem JavaScript) com um cartão por modelo
