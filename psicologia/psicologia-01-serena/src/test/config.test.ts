@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import altConfig from "../config/site.config.alt";
 import siteConfig from "../config/site.config";
 import { aplicarAoHtml, renderHeadTags, robotsTxt } from "../config/head";
+import { appleTouchSvg, corSobre, faviconSvg } from "../config/icones";
 import { mailtoHref, nomeDoPerfil, preenchido, telHref, whatsappUrl } from "../config/links";
 import { fonteProibida, googleFontsHref, temaCss } from "../config/theme";
 import { partesDoTitulo, semMarcacao } from "../config/titulo";
@@ -212,6 +213,30 @@ describe("head e robots", () => {
     expect(html).not.toContain("Clara Exemplo");
     expect(html).not.toContain("*");
     expect(html).not.toContain("<!--SITE_");
+  });
+});
+
+describe("ícones (favicon e apple-touch-icon)", () => {
+  it.each(configs)("config %s: o ícone usa a cor primária e o desenho tem contraste", (_nome, config) => {
+    const { primaria } = config.tema.cores;
+    expect(faviconSvg(primaria)).toContain(`fill="${primaria}"`);
+    expect(appleTouchSvg(primaria)).toContain(`fill="${primaria}"`);
+    expect(contraste(corSobre(primaria), primaria)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it("o ícone muda com a cor primária (config alternativo)", () => {
+    expect(faviconSvg(altConfig.tema.cores.primaria)).not.toBe(faviconSvg(siteConfig.tema.cores.primaria));
+  });
+
+  it("recusa cor primária que não seja #RRGGBB", () => {
+    expect(() => faviconSvg("rgb(1,2,3)")).toThrow(/primaria/);
+  });
+
+  it("o head aponta para os três ícones", () => {
+    const head = renderHeadTags(siteConfig);
+    expect(head).toContain('<link rel="icon" type="image/svg+xml" href="/favicon.svg" />');
+    expect(head).toContain('<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />');
+    expect(head).toContain('<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />');
   });
 });
 

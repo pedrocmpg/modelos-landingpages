@@ -78,6 +78,29 @@ describe("HTML do build (sem JavaScript)", () => {
   });
 });
 
+describe("ícones gerados no build", () => {
+  const dimensoes = (arquivo: string) => {
+    const bytes = readFileSync(join(saida, arquivo));
+    expect(bytes.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
+    return [bytes.readUInt32BE(16), bytes.readUInt32BE(20)];
+  };
+
+  it("o head do HTML aponta para os três ícones, que existem em dist/", () => {
+    expect(doc.head.querySelector('link[rel="icon"][type="image/svg+xml"]')?.getAttribute("href")).toBe("/favicon.svg");
+    expect(doc.head.querySelector('link[rel="icon"][type="image/png"]')?.getAttribute("href")).toBe("/favicon-32.png");
+    expect(doc.head.querySelector('link[rel="apple-touch-icon"]')?.getAttribute("href")).toBe("/apple-touch-icon.png");
+  });
+
+  it("favicon.svg usa a cor primária do config", () => {
+    expect(readFileSync(join(saida, "favicon.svg"), "utf8")).toContain(`fill="${siteConfig.tema.cores.primaria}"`);
+  });
+
+  it("favicon-32.png é 32x32 e apple-touch-icon.png é 180x180", () => {
+    expect(dimensoes("favicon-32.png")).toEqual([32, 32]);
+    expect(dimensoes("apple-touch-icon.png")).toEqual([180, 180]);
+  });
+});
+
 describe("nenhuma tag de compartilhamento é inserida por JavaScript", () => {
   it("o JavaScript entregue ao navegador não contém og:, twitter: nem cria <meta>", () => {
     const pasta = join(saida, "assets");

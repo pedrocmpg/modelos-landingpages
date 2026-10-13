@@ -36,6 +36,9 @@ export function renderHeadTags(config: SiteConfig): string {
     `<title>${e(meta.title)}</title>`,
     `<meta name="description" content="${e(meta.description)}" />`,
     `<meta name="theme-color" content="${e(meta.themeColor)}" />`,
+    `<link rel="icon" type="image/svg+xml" href="/favicon.svg" />`,
+    `<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />`,
+    `<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />`,
   ];
 
   if (meta.noindex) {
