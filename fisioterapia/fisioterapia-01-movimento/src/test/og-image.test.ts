@@ -25,4 +25,10 @@ describe("imagem do cartão de compartilhamento (og-image.png)", () => {
   it("tem menos de 300 KB", () => {
     expect(statSync(arquivo).size).toBeLessThan(300 * 1024);
   });
+
+  it("npm run og regenera a imagem (script no package.json e arquivo existem)", () => {
+    const pacote = JSON.parse(readFileSync(join(process.cwd(), "package.json"), "utf8"));
+    expect(pacote.scripts.og).toBe("node scripts/gerar-og.mjs");
+    expect(statSync(join(process.cwd(), "scripts", "gerar-og.mjs")).isFile()).toBe(true);
+  });
 });
