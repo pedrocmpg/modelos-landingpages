@@ -1,8 +1,10 @@
 import type { ComponentType } from "react";
 import type { SecaoId, SiteConfig } from "./config/types.ts";
+import { Abertura } from "./components/Abertura.tsx";
 import { BarraProgresso } from "./components/BarraProgresso.tsx";
 import { BarraWhatsapp, BotaoWhatsappFlutuante } from "./components/BotoesWhatsapp.tsx";
 import { ComoFunciona } from "./components/ComoFunciona.tsx";
+import { Carteirinha } from "./components/Carteirinha.tsx";
 import { Contato } from "./components/Contato.tsx";
 import { CtaFinal } from "./components/CtaFinal.tsx";
 import { Depoimentos } from "./components/Depoimentos.tsx";
@@ -11,6 +13,7 @@ import { Faq } from "./components/Faq.tsx";
 import { Galeria } from "./components/Galeria.tsx";
 import { Header } from "./components/Header.tsx";
 import { Hero } from "./components/Hero.tsx";
+import { Manifesto } from "./components/Manifesto.tsx";
 import { Rodape } from "./components/Rodape.tsx";
 import { Servicos } from "./components/Servicos.tsx";
 import { Sobre } from "./components/Sobre.tsx";
@@ -28,6 +31,8 @@ const SECOES: Record<SecaoId, ComponentType> = {
   depoimentos: Depoimentos,
   faq: Faq,
   ctaFinal: CtaFinal,
+  manifesto: Manifesto,
+  carteirinha: Carteirinha,
   contato: Contato,
 };
 
@@ -40,6 +45,7 @@ function Pagina() {
       <a href="#conteudo" className="pular-conteudo">
         {conteudo.rotulos.pularParaConteudo}
       </a>
+      <Abertura />
       <BarraProgresso />
       <Header />
       <main id="conteudo" tabIndex={-1}>

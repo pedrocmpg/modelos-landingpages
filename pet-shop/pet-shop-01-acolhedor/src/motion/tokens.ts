@@ -17,6 +17,9 @@ export const EASE = {
 /** Atraso escalonado: 3 itens por fileira, sem acumular em listas longas. */
 export const escalonar = (indice: number, passo = 0.1) => (indice % 3) * passo;
 
+/** Tempo até a cortina da abertura começar a subir. */
+export const DURACAO_ABERTURA = 1.35;
+
 export interface Movimento {
   /** Usuário pediu menos movimento: só fades curtos, sem parallax nem loops. */
   reduzido: boolean;
@@ -26,6 +29,8 @@ export interface Movimento {
   observador: boolean;
   /** Loops contínuos permitidos (nem reduzido, nem suave). */
   loops: boolean;
+  /** Segundos que a abertura (plaquinha) ainda cobre a tela: entradas do hero esperam esse tempo. */
+  abertura: number;
   /** Ajusta uma distância em px à intensidade (0 com movimento reduzido). */
   dist: (px: number) => number;
   /** Ajusta uma duração em segundos à intensidade (fades curtos se reduzido). */
@@ -47,6 +52,7 @@ export function useMovimento(): Movimento {
       suave,
       observador,
       loops: !reduzido && !suave,
+      abertura: observador && !reduzido ? DURACAO_ABERTURA : 0,
       dist: (px: number) => px * fatorDist,
       dur: (s: number) => (reduzido ? Math.min(s, 0.25) : s * fatorDur),
     };

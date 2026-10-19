@@ -44,9 +44,9 @@ describe("links", () => {
 describe("tema", () => {
   it("monta o link do Google Fonts a partir do config principal", () => {
     expect(googleFontsHref(siteConfig.tema)).toBe(
-      "https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700" +
-        "&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700" +
-        "&family=Caveat:wght@500;700&display=swap",
+      "https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800" +
+        "&family=Albert+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700" +
+        "&family=DM+Mono:wght@400;500&display=swap",
     );
   });
 
@@ -56,7 +56,7 @@ describe("tema", () => {
     tema.fontes.texto = { ...tema.fontes.titulo };
     const href = googleFontsHref(tema);
     expect(href.match(/family=/g)).toHaveLength(1);
-    expect(temaCss(tema)).toContain('--fonte-destaque:"Fraunces"');
+    expect(temaCss(tema)).toContain('--fonte-destaque:"Syne"');
   });
 
   it("transforma cores, fontes e raios em variáveis CSS", () => {

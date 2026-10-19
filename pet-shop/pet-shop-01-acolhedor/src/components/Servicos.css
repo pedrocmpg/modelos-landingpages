@@ -1,54 +1,136 @@
-.servicos__grade {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(18px, 2.5vw, 28px);
-  margin-top: clamp(32px, 5vw, 56px);
+.servicos__pilha {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: clamp(32px, 5vw, 64px);
 }
 
-.servicos__grade > li {
-  display: flex;
+/* Cada item gruda no topo; o próximo sobe por cima. A cada cartão o topo desce um pouco. */
+.servicos__pilha--sticky .servico-pilha {
+  position: sticky;
+  top: calc(var(--altura-header) + 8px + var(--i) * 16px);
+  padding-bottom: 22vh;
+}
+
+.servicos__pilha--sticky .servico-pilha:last-child {
+  padding-bottom: 0;
 }
 
 .servico {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: stretch;
+  min-height: clamp(380px, 56vh, 560px);
+  padding: clamp(22px, 4vw, 56px);
+  border-radius: var(--raio-cartao);
   overflow: hidden;
+  transform-origin: 50% 0;
+  box-shadow: 0 30px 60px -34px var(--cor-sombra);
 }
 
-.servico__imagem {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
+.servico--0 {
+  background: var(--cor-primaria);
+  color: var(--cor-texto);
 }
 
-.servico__corpo {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: clamp(26px, 3.5vw, 36px) clamp(22px, 3vw, 30px);
+.servico--1 {
+  background: var(--cor-secundaria);
+  color: var(--cor-fundo);
 }
 
-.servico .icone-chip {
-  margin-bottom: 20px;
+.servico--2 {
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
+}
+
+.servico--3 {
+  background: var(--cor-escuro);
+  color: var(--cor-fundo);
 }
 
 .servico h3 {
-  margin-bottom: 12px;
-  font-size: clamp(21px, 2.4vw, 25px);
+  margin-block: 14px 18px;
+  color: inherit;
+  font-size: clamp(30px, 4.4vw, 60px);
+  overflow-wrap: anywhere;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.96;
 }
 
 .servico__texto {
-  color: var(--cor-texto-secundario);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.servico__indice {
+  font-family: var(--fonte-destaque);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  opacity: 0.8;
+}
+
+.servico__descricao {
+  max-width: 420px;
+  font-size: clamp(16px, 1.6vw, 19px);
+  font-weight: 500;
 }
 
 .servico__preco {
-  margin-top: auto;
-  padding-top: 18px;
-  color: var(--cor-destaque);
-  font-size: 17px;
-  font-weight: 700;
+  margin-top: 22px;
+  padding: 9px 18px 9px 16px;
+  border: 1.5px dashed currentColor;
+  border-radius: 999px;
+  font-family: var(--fonte-destaque);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.servico__visual {
+  position: relative;
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+}
+
+/* A foto em arco repete a forma da plaquinha. */
+.servico__imagem {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px 999px var(--raio-cartao) var(--raio-cartao);
+  object-fit: cover;
+}
+
+.servico__icone-chip {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--cor-fundo);
+  color: var(--cor-escuro);
+  box-shadow: 0 10px 20px -8px var(--cor-sombra);
+}
+
+.servico__icone-grande {
+  opacity: 0.9;
+}
+
+.servico__veu {
+  position: absolute;
+  inset: 0;
+  background: var(--cor-escuro);
+  pointer-events: none;
 }
 
 .servicos__rodape {
@@ -56,18 +138,27 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  margin-top: 40px;
+  margin-top: clamp(28px, 4vw, 48px);
   text-align: center;
 }
 
 .servicos__observacao {
-  max-width: 560px;
+  max-width: 520px;
   color: var(--cor-texto-secundario);
-  font-size: 15px;
 }
 
-@media (max-width: 900px) {
-  .servicos__grade {
+@media (max-width: 800px) {
+  .servico {
     grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .servico__visual {
+    min-height: 0;
+    aspect-ratio: 16 / 11;
+  }
+
+  .servicos__pilha--sticky .servico-pilha {
+    padding-bottom: 12vh;
   }
 }

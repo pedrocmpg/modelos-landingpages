@@ -1,24 +1,29 @@
 .faq__layout {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: clamp(28px, 6vw, 72px);
+  gap: clamp(28px, 6vw, 88px);
   align-items: start;
 }
 
-.faq__lista {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+.faq__layout > .titulo-secao {
+  position: sticky;
+  top: calc(var(--altura-header) + 24px);
 }
 
-.faq__item {
-  overflow: hidden;
-  border-radius: var(--raio-cartao-pequeno);
+.faq__lista {
+  border-top: 2px solid var(--cor-texto);
+}
+
+.faq__item.cartao {
+  border: 0;
+  border-bottom: 2px solid var(--cor-texto);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .faq__pergunta {
   font-size: inherit;
-  font-family: var(--fonte-texto);
   font-weight: 700;
 }
 
@@ -28,14 +33,16 @@
   justify-content: space-between;
   gap: 16px;
   width: 100%;
-  min-height: 60px;
-  padding: 14px clamp(18px, 3vw, 26px);
+  min-height: 72px;
+  padding: 18px 0;
   border: 0;
   background: transparent;
   color: var(--cor-texto);
-  font-size: 17px;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(19px, 2.2vw, 26px);
   font-weight: 700;
-  line-height: 1.35;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
   text-align: left;
 }
 
@@ -44,25 +51,34 @@
   flex: none;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--cor-texto);
   border-radius: 50%;
-  background: var(--cor-icone-fundo);
-  color: var(--cor-destaque);
-  transition: transform 0.4s var(--ease-enter);
+  color: var(--cor-texto);
+  transition:
+    transform 0.4s var(--ease-enter),
+    background 0.3s var(--ease-enter);
 }
 
 .faq__item--aberto .faq__icone {
   transform: rotate(135deg);
+  background: var(--cor-primaria);
 }
 
 .faq__resposta {
-  padding: 0 clamp(18px, 3vw, 26px) 22px;
+  max-width: 560px;
+  padding: 0 0 26px;
   color: var(--cor-texto-secundario);
+  font-size: 17px;
 }
 
 @media (max-width: 900px) {
   .faq__layout {
     grid-template-columns: 1fr;
+  }
+
+  .faq__layout > .titulo-secao {
+    position: static;
   }
 }

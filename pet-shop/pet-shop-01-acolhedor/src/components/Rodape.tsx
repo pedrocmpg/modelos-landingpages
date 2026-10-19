@@ -1,5 +1,6 @@
 import { useConfig } from "../context/configContext.ts";
 import { nomeDoPerfil, preenchido } from "../config/links.ts";
+import { NomeGigante } from "./NomeGigante.tsx";
 import { perfisSociais } from "./perfis.ts";
 import "./Rodape.css";
 
@@ -52,6 +53,8 @@ export function Rodape() {
         </p>
         {preenchido(rodape.texto) && <p>{rodape.texto}</p>}
       </div>
+
+      <NomeGigante texto={negocio.nome} className="rodape__gigante" />
     </footer>
   );
 }

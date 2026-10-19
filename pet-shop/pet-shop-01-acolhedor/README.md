@@ -1,9 +1,18 @@
 # Pet Shop 01 — Acolhedor
 
-Landing page de pet shop (banho e tosa) em estilo **acolhedor**: creme, marrom e
-dourado, com `Fraunces` nos títulos, `DM Sans` no texto e `Caveat` só em pequenas
-anotações. Site estático (Vite + React + TypeScript), animações com
-[motion](https://motion.dev) e rolagem suave com [Lenis](https://lenis.darkroom.engineering/).
+Landing page de pet shop (banho e tosa) em estilo **acolhedor**, com marca própria: a
+**plaquinha de identificação do pet**. Laranja, verde-floresta e creme; `Syne` nos títulos,
+`Albert Sans` no texto e `DM Mono` nos rótulos "gravados". Site estático (Vite + React +
+TypeScript), animações com [motion](https://motion.dev) e rolagem suave com
+[Lenis](https://lenis.darkroom.engineering/).
+
+**O que é da marca:** abertura em que a plaquinha cai e a cortina sobe; hero em arco com o
+nome do negócio gigante (ajustado à largura, qualquer nome serve) e a nota do Google numa
+plaquinha pendurada; faixa em movimento (`conteudo.faixa`); manifesto que acende palavra por
+palavra na rolagem (`conteudo.manifesto`); serviços em cartões que se empilham; depoimentos
+como plaquinhas penduradas; **carteirinha do pet** (`conteudo.carteirinha`): o tutor escolhe
+porte/serviço/período e o botão abre o WhatsApp com o pedido escrito; rodapé com o nome gigante
+cortado pela borda. Com movimento reduzido tudo vira estático e legível.
 
 > Todos os dados deste modelo são **fictícios** ("Pet Shop Exemplo",
 > (00) 90000-0000, Rua Exemplo, 123). Depoimentos, nota e fotos de exemplo aparecem

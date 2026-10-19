@@ -13,6 +13,8 @@ export type SecaoId =
   | "depoimentos"
   | "faq"
   | "ctaFinal"
+  | "manifesto"
+  | "carteirinha"
   | "contato";
 
 export type IconeId =
@@ -149,7 +151,7 @@ export interface Hero {
   subtitulo: string;
   ctaPrimario: string;
   ctaSecundario?: { texto: string; secao: SecaoId };
-  /** Anotação curta (fonte de destaque) sobre a foto. */
+  /** Frase curta que gira em volta do selo sobre a foto. */
   anotacao?: string;
 }
 
@@ -195,6 +197,30 @@ export interface Pergunta {
   resposta: string;
 }
 
+/** Frase que "acende" palavra por palavra enquanto a página rola. */
+export interface Manifesto {
+  eyebrow?: string;
+  frase: string;
+  /** Palavras da frase que ficam na cor primária. */
+  destaque?: string[];
+  assinatura?: string;
+}
+
+export interface CampoCarteirinha {
+  rotulo: string;
+  opcoes: string[];
+}
+
+/** "Carteirinha do pet": o tutor escolhe opções e o pedido vai pronto para o WhatsApp. */
+export interface Carteirinha extends Cabecalho {
+  /** Faixa de cima do cartão. */
+  cabecalho: string;
+  campos: CampoCarteirinha[];
+  resumoRotulo: string;
+  resumoVazio: string;
+  botao: string;
+}
+
 export interface Rotulos {
   pularParaConteudo: string;
   menuPrincipal: string;
@@ -220,6 +246,10 @@ export interface Rotulos {
 
 export interface Conteudo {
   hero: Hero;
+  /** Palavras da faixa que corre sob o hero. Vazio = usa o slogan. */
+  faixa?: string[];
+  manifesto?: Manifesto;
+  carteirinha?: Carteirinha;
   sobre?: Cabecalho & { paragrafos: string[] };
   diferenciais: Cabecalho & { itens: Diferencial[] };
   servicos: Cabecalho & {

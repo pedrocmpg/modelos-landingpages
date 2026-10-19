@@ -7,12 +7,14 @@
   height: var(--altura-header);
 }
 
-/* O fundo aparece só com opacity (barato) em vez de animar altura/blur. */
+/* Depois de rolar, o cabeçalho vira uma pílula flutuante (só opacity, barato). */
 .header__fundo {
   position: absolute;
-  inset: 0;
-  background: color-mix(in srgb, var(--cor-fundo) 94%, transparent);
-  box-shadow: 0 6px 22px -10px var(--cor-sombra);
+  inset: 8px clamp(10px, 2.4vw, 28px);
+  border: 2px solid var(--cor-escuro);
+  border-radius: 999px;
+  background: var(--cor-fundo);
+  box-shadow: 4px 4px 0 var(--cor-escuro);
   opacity: 0;
   transition: opacity 0.35s var(--ease-enter);
 }
@@ -37,14 +39,15 @@
   min-height: 44px;
   min-width: 0;
   font-family: var(--fonte-titulo);
-  font-size: clamp(17px, 3vw, 20px);
-  font-weight: 600;
+  font-size: clamp(15px, 2.2vw, 17px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .header__logo {
   display: inline-flex;
   flex: none;
-  color: var(--cor-primaria);
+  color: var(--cor-escuro);
 }
 
 .header__nome {
@@ -56,15 +59,17 @@
 .header__nav {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 20px;
 }
 
 .header__link {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-size: 15px;
-  font-weight: 600;
+  font-family: var(--fonte-destaque);
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .header__cta {
@@ -97,6 +102,7 @@
   padding: 8px var(--pad-container) 24px;
   overflow-y: auto;
   background: var(--cor-fundo);
+  border-bottom: 2px solid var(--cor-escuro);
   box-shadow: 0 18px 28px -14px var(--cor-sombra);
 }
 

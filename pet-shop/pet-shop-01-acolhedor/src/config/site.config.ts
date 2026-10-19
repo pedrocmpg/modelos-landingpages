@@ -22,7 +22,7 @@ export const siteConfig: SiteConfig = {
     ogImageAlt: "Início do modelo de site para pet shop (estilo Acolhedor), com o título do cartão: Modelo de site para pet shop — exemplo",
     siteName: "Pet Shop Exemplo",
     locale: "pt_BR",
-    themeColor: "#FFF6E5",
+    themeColor: "#F6EEDF",
   },
 
   negocio: {
@@ -56,43 +56,46 @@ export const siteConfig: SiteConfig = {
 
   tema: {
     cores: {
-      primaria: "#f0b03a",
-      secundaria: "#2c6b66",
-      destaque: "#8a5a12",
-      fundo: "#fff6e5",
-      superficie: "#fbe7be",
-      texto: "#2b1d14",
-      textoSecundario: "#5c4a3b",
-      escuro: "#2b1d14",
+      primaria: "#ff6b2c",
+      secundaria: "#1f5b4a",
+      destaque: "#a63a10",
+      fundo: "#f6eedf",
+      superficie: "#ebdfc6",
+      texto: "#16241f",
+      textoSecundario: "#455248",
+      escuro: "#16241f",
     },
     fontes: {
       titulo: {
-        familia: "Fraunces",
-        pesos: [400, 500, 600, 700],
-        fallback: "serif",
+        familia: "Syne",
+        pesos: [600, 700, 800],
+        fallback: "sans-serif",
       },
       texto: {
-        familia: "DM Sans",
+        familia: "Albert Sans",
         pesos: [400, 500, 600, 700],
         italico: true,
         fallback: "sans-serif",
       },
+      // Letras "gravadas na plaquinha": rótulos, números e etiquetas.
       destaque: {
-        familia: "Caveat",
-        pesos: [500, 700],
-        fallback: "cursive",
+        familia: "DM Mono",
+        pesos: [400, 500],
+        fallback: "monospace",
       },
     },
-    raio: { cartao: 28, botao: 999 },
+    raio: { cartao: 32, botao: 999 },
     intensidadeAnimacao: "normal",
   },
 
   secoes: [
     { id: "hero", ativo: true },
-    { id: "diferenciais", ativo: true, menu: "Diferenciais" },
+    { id: "manifesto", ativo: true },
     { id: "servicos", ativo: true, menu: "Serviços" },
+    { id: "diferenciais", ativo: true, menu: "Diferenciais" },
     { id: "galeria", ativo: true, menu: "Galeria" },
     { id: "depoimentos", ativo: true, menu: "Depoimentos" },
+    { id: "carteirinha", ativo: true, menu: "Agendar" },
     { id: "faq", ativo: true, menu: "Dúvidas" },
     { id: "contato", ativo: true, menu: "Contato" },
     // Seções prontas que este modelo não usa por padrão: mude para true.
@@ -109,7 +112,33 @@ export const siteConfig: SiteConfig = {
         "Cuidado de perto, ambiente tranquilo e capricho em cada detalhe para o seu pet sair cheiroso, escovado e feliz.",
       ctaPrimario: "Agendar pelo WhatsApp",
       ctaSecundario: { texto: "Ver depoimentos", secao: "depoimentos" },
-      anotacao: "carinho garantido!",
+      anotacao: "carinho garantido",
+    },
+
+    // Palavras que correm na faixa sob o hero.
+    faixa: ["Banho", "Tosa", "Hidratação", "Escovação", "Cheirinho", "Carinho"],
+
+    manifesto: {
+      eyebrow: "Nosso jeito",
+      frase: "Aqui ninguém é só mais um cliente. Cada pet tem nome, jeitinho e hora de ser mimado.",
+      destaque: ["nome", "jeitinho", "mimado"],
+      assinatura: "Pet Shop Exemplo · desde sempre com carinho",
+    },
+
+    carteirinha: {
+      eyebrow: "Agende em 10 segundos",
+      titulo: "Monte a carteirinha do seu pet",
+      introducao:
+        "Escolha porte, serviço e período. O pedido chega prontinho no nosso WhatsApp, é só confirmar o horário.",
+      cabecalho: "Carteirinha do pet",
+      campos: [
+        { rotulo: "Porte", opcoes: ["Pequeno", "Médio", "Grande"] },
+        { rotulo: "Serviço", opcoes: ["Banho", "Tosa", "Banho e tosa", "Hidratação"] },
+        { rotulo: "Período", opcoes: ["Manhã", "Tarde"] },
+      ],
+      resumoRotulo: "Pedido",
+      resumoVazio: "Escolha as opções para montar o pedido.",
+      botao: "Enviar pedido no WhatsApp",
     },
 
     sobre: {
@@ -155,6 +184,7 @@ export const siteConfig: SiteConfig = {
           texto:
             "Banho completo com produtos de qualidade, secagem e escovação para deixar o pelo macio e cheiroso.",
           icone: "gota",
+          imagem: { src: "/images/pet-1-puppy.jpg", alt: "Filhote de golden retriever recém-banhado, com o pelo molhado" },
           preco: "a partir de R$ 50",
         },
         {
@@ -162,6 +192,7 @@ export const siteConfig: SiteConfig = {
           texto:
             "Tosa higiênica ou na tesoura, no estilo que combina com a raça e o jeito do seu pet.",
           icone: "tesoura",
+          imagem: { src: "/images/pet-2-tongue.jpg", alt: "Golden retriever sorridente sentado no gramado, de pelo aparado" },
           preco: "a partir de R$ 70",
         },
         {
@@ -169,6 +200,7 @@ export const siteConfig: SiteConfig = {
           texto:
             "Tratamento para pelos secos ou embaraçados, com acabamento macio e brilhante.",
           icone: "pata",
+          imagem: { src: "/images/pet-4-lying.jpg", alt: "Filhote de golden retriever deitado, de pelo macio e escovado" },
         },
       ],
       anotacao: "orçamento sem compromisso",

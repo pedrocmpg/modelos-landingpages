@@ -3,25 +3,45 @@
   transform-origin: left center;
 }
 
+/* Fotos de carteirinha: moldura de papel, levemente tortas, que se endireitam no hover. */
 .galeria__grade {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   grid-auto-flow: dense;
-  gap: clamp(14px, 2vw, 22px);
-  margin-top: clamp(28px, 4vw, 48px);
+  gap: clamp(22px, 3vw, 44px) clamp(16px, 2.4vw, 32px);
+  margin-top: clamp(32px, 5vw, 60px);
 }
 
-/* Fotos quadradas; o antes/depois ocupa duas colunas na mesma altura. Os itens
-   esticam até a altura da linha e as imagens preenchem o quadro. */
 .galeria__celula {
   position: relative;
-  aspect-ratio: 1 / 1;
+  grid-column: span 2;
   align-self: stretch;
+  aspect-ratio: 1 / 1.12;
+  padding: 10px 10px 54px;
+  border: 2px solid var(--cor-escuro);
+  border-radius: calc(var(--raio-cartao) * 0.4);
+  background: #fffaf0;
+  box-shadow: 8px 8px 0 var(--cor-escuro);
+  transition: rotate 0.5s var(--ease-enter);
 }
 
 .galeria__celula--larga {
-  grid-column: span 2;
-  aspect-ratio: 2.06 / 1;
+  grid-column: span 4;
+  aspect-ratio: 16 / 10;
+}
+
+.galeria__celula:nth-child(odd) {
+  rotate: -1.2deg;
+}
+
+.galeria__celula:nth-child(even) {
+  rotate: 1.2deg;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .galeria__celula:hover {
+    rotate: 0deg;
+  }
 }
 
 .galeria__item {
@@ -29,20 +49,19 @@
   height: 100%;
 }
 
+.galeria__item,
+.galeria__foto.foto,
+.galeria__celula--larga .antes-depois {
+  border-radius: calc(var(--raio-cartao) * 0.22);
+}
+
 .galeria__celula--larga .galeria__item {
-  border-radius: var(--raio-cartao);
   overflow: hidden;
-  box-shadow: 0 24px 48px -22px color-mix(in srgb, var(--cor-texto) 38%, transparent);
 }
 
 .galeria__foto.foto {
   height: 100%;
-  border-radius: var(--raio-cartao-pequeno);
-}
-
-.galeria__celula--larga .galeria__item,
-.galeria__celula--larga .antes-depois {
-  border-radius: var(--raio-cartao-pequeno);
+  box-shadow: none;
 }
 
 .galeria__selo {
@@ -52,19 +71,20 @@
   z-index: 2;
 }
 
+/* A legenda fica na borda branca, como escrita à mão na foto. */
 .galeria__legenda {
   position: absolute;
-  left: 12px;
-  bottom: 12px;
+  left: 0;
+  right: 0;
+  bottom: -42px;
   z-index: 3;
-  max-width: calc(100% - 24px);
-  padding: 6px 13px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--cor-escuro) 82%, transparent);
-  color: var(--cor-fundo);
-  font-size: 14px;
-  font-weight: 600;
+  font-family: var(--fonte-destaque);
+  font-size: 13px;
+  letter-spacing: 0.06em;
   line-height: 1.3;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--cor-texto);
   pointer-events: none;
 }
 
@@ -73,13 +93,28 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .galeria__celula {
+    grid-column: span 1;
+  }
+
   .galeria__celula--larga {
+    grid-column: span 2;
     aspect-ratio: 4 / 3;
   }
 }
 
-@media (max-width: 480px) {
-  .galeria__legenda {
-    font-size: 13px;
+@media (max-width: 560px) {
+  .galeria__grade {
+    grid-template-columns: 1fr;
+  }
+
+  .galeria__celula,
+  .galeria__celula--larga {
+    grid-column: span 1;
+    aspect-ratio: 4 / 4.2;
+  }
+
+  .galeria__celula--larga {
+    aspect-ratio: 4 / 3.6;
   }
 }

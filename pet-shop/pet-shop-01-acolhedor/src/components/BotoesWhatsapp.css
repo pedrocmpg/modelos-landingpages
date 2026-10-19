@@ -34,9 +34,10 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
+  border: 2px solid var(--cor-escuro);
   background: var(--cor-primaria);
   color: var(--cor-texto);
-  box-shadow: 0 12px 26px -8px var(--cor-sombra);
+  box-shadow: 4px 4px 0 var(--cor-escuro);
 }
 
 .whatsapp-flutuante__onda {

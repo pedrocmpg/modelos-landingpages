@@ -68,6 +68,7 @@ export const altConfig: SiteConfig = {
 
   secoes: [
     { id: "hero", ativo: true },
+    { id: "manifesto", ativo: true },
     { id: "sobre", ativo: true, menu: "Quem somos" },
     { id: "servicos", ativo: true, menu: "Tratamentos" },
     { id: "diferenciais", ativo: true, menu: "Vantagens" },
@@ -75,6 +76,7 @@ export const altConfig: SiteConfig = {
     { id: "galeria", ativo: true, menu: "Resultados" },
     { id: "depoimentos", ativo: true, menu: "Opiniões" },
     { id: "faq", ativo: true, menu: "FAQ" },
+    { id: "carteirinha", ativo: true },
     { id: "ctaFinal", ativo: true },
     { id: "contato", ativo: true, menu: "Localização" },
   ],
@@ -87,6 +89,29 @@ export const altConfig: SiteConfig = {
       ctaPrimario: "Quero marcar um horário",
       ctaSecundario: { texto: "Ver resultados", secao: "galeria" },
       anotacao: "com muito amor!",
+    },
+
+    faixa: ["Spa teste", "Tosa teste", "Mimo teste"],
+
+    manifesto: {
+      eyebrow: "Filosofia de teste",
+      frase: "Frase de teste do manifesto alternativo para o bichinho de teste.",
+      destaque: ["teste"],
+      assinatura: "Assinatura de teste do manifesto",
+    },
+
+    carteirinha: {
+      eyebrow: "Pedido rápido de teste",
+      titulo: "Carteirinha alternativa de teste",
+      introducao: "Introdução alternativa da carteirinha de teste.",
+      cabecalho: "Cartão alternativo",
+      campos: [
+        { rotulo: "Tamanho de teste", opcoes: ["Mini teste", "Gigante teste"] },
+        { rotulo: "Tratamento de teste", opcoes: ["Opção A teste", "Opção B teste", "Opção C teste"] },
+      ],
+      resumoRotulo: "Resumo de teste",
+      resumoVazio: "Nada escolhido ainda (teste).",
+      botao: "Mandar pedido de teste",
     },
 
     sobre: {

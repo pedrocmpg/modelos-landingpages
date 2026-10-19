@@ -1,0 +1,71 @@
+.manifesto {
+  position: relative;
+  padding: 0;
+  overflow-x: clip;
+}
+
+.manifesto__palco {
+  display: flex;
+  align-items: center;
+  min-height: 80svh;
+  padding: var(--espaco-secao) 0;
+}
+
+/* Com rolagem animada: o palco fica preso na tela e a página "gasta" 260svh. */
+.manifesto--palco {
+  height: 260svh;
+}
+
+.manifesto--palco .manifesto__palco {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 0;
+  padding: 0;
+}
+
+.manifesto__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.manifesto__eyebrow {
+  margin: 0;
+  color: var(--cor-primaria);
+}
+
+.manifesto__frase {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(30px, 5.4vw, 82px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  text-wrap: balance;
+  max-width: 24ch;
+}
+
+.manifesto__mascara {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: top;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.manifesto__palavra {
+  display: inline-block;
+}
+
+.manifesto__palavra--destaque {
+  color: var(--cor-primaria);
+  font-style: italic;
+}
+
+.manifesto__assinatura {
+  font-family: var(--fonte-destaque);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cor-texto-escuro-atenuado);
+}

@@ -10,7 +10,7 @@ publique.
 
 | Nicho | Modelo | Estilo | Demo |
 | --- | --- | --- | --- |
-| Pet shop | [`pet-shop/pet-shop-01-acolhedor`](pet-shop/pet-shop-01-acolhedor) | Acolhedor: creme, marrom e dourado; Fraunces + DM Sans + Caveat | [demo](https://modelo-pet-shop-acolhedor.vercel.app) |
+| Pet shop | [`pet-shop/pet-shop-01-acolhedor`](pet-shop/pet-shop-01-acolhedor) | Acolhedor (marca "plaquinha do pet"): laranja, verde-floresta e creme, hero em arco com nome gigante, cartões que se empilham, manifesto na rolagem e carteirinha de agendamento; Syne + Albert Sans + DM Mono | [demo](https://modelo-pet-shop-acolhedor.vercel.app) |
 | Psicologia | [`psicologia/psicologia-01-serena`](psicologia/psicologia-01-serena) | Serena ("luz da manhã"): areia, sálvia e argila; Instrument Serif + Hanken Grotesk | [demo](https://modelo-psicologia-serena.vercel.app) |
 | Psicologia | [`psicologia/psicologia-02-acolher`](psicologia/psicologia-02-acolher) | Acolher ("fim de tarde"): areia, musgo e terracota, layout de revista; Gloock + Onest + Newsreader | [demo](https://modelo-psicologia-acolher.vercel.app) |
 | Fisioterapia | [`fisioterapia/fisioterapia-01-movimento`](fisioterapia/fisioterapia-01-movimento) | Movimento ("reabilitação calma"): verde-petróleo e terracota, linhas de coluna e trajetória em SVG; Bricolage Grotesque + Instrument Sans | [demo](https://modelo-fisioterapia-movimento.vercel.app) |

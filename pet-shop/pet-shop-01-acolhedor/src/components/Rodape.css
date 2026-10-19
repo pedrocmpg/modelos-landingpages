@@ -1,5 +1,5 @@
 .rodape {
-  padding: clamp(40px, 6vw, 64px) 0 28px;
+  padding: clamp(56px, 8vw, 96px) 0 0;
   background: var(--cor-escuro);
   color: var(--cor-fundo);
 }
@@ -14,8 +14,9 @@
 
 .rodape__nome {
   font-family: var(--fonte-titulo);
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .rodape__slogan,
@@ -64,7 +65,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 4px 24px;
-  margin-top: 32px;
+  margin-top: 40px;
   padding-top: 20px;
   border-top: 1px solid var(--cor-borda-escura);
   color: var(--cor-texto-escuro-atenuado);
@@ -83,4 +84,12 @@
   .rodape__redes {
     justify-content: center;
   }
+}
+
+/* Nome gigante cortado pela borda de baixo da página. */
+.rodape__gigante {
+  height: calc(var(--fs) * 0.68);
+  margin-top: clamp(24px, 4vw, 48px);
+  padding-inline: var(--pad-container);
+  color: var(--cor-primaria);
 }

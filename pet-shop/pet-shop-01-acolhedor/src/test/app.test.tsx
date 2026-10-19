@@ -1,4 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import App from "../App.tsx";
 import altConfig from "../config/site.config.alt.ts";
@@ -70,7 +71,7 @@ describe("o app é função do config (config alternativo)", () => {
       siteConfig.redes.instagram!,
       // todo texto de conteúdo do config principal
       // (ids de seção como "depoimentos" são âncoras, não texto)
-      ...textos(siteConfig.conteudo).filter((t) => t.length >= 10 && !ids.includes(t)),
+      ...textos(siteConfig.conteudo).filter((t) => t.length >= 10 && !ids.includes(t) && !t.startsWith("/images/")),
       ...textos(siteConfig.imagens).filter((t) => t.length >= 10 && !t.startsWith("/images/")),
     ];
     for (const texto of principal) {
@@ -173,5 +174,45 @@ describe("config principal", () => {
     expect(links.length).toBeGreaterThanOrEqual(3);
     for (const a of links) expect(a).toHaveAttribute("href", whatsappUrl(siteConfig.contato));
     expect(links[0].getAttribute("href")).toContain("wa.me/5500900000000");
+  });
+});
+
+describe("carteirinha e manifesto (config alternativo)", () => {
+  const c = altConfig.conteudo;
+
+  it("a carteirinha monta o pedido do WhatsApp com as opções escolhidas", async () => {
+    render(<App config={altConfig} />);
+    const botao = screen.getByRole("link", { name: c.carteirinha!.botao });
+    // Sem escolha: só a mensagem padrão do config.
+    expect(botao).toHaveAttribute("href", whatsappUrl(altConfig.contato));
+    expect(screen.getByText(c.carteirinha!.resumoVazio)).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("radio", { name: "Mini teste" }));
+    await userEvent.click(screen.getByRole("radio", { name: "Opção B teste" }));
+
+    const mensagem = [
+      altConfig.contato.mensagemWhatsapp,
+      "Tamanho de teste: Mini teste",
+      "Tratamento de teste: Opção B teste",
+    ].join("\n");
+    expect(botao).toHaveAttribute("href", whatsappUrl({ ...altConfig.contato, mensagemWhatsapp: mensagem }));
+    expect(screen.queryByText(c.carteirinha!.resumoVazio)).toBeNull();
+    expect(screen.getByText("Tamanho de teste: Mini teste · Tratamento de teste: Opção B teste")).toBeInTheDocument();
+  });
+
+  it("o manifesto tem a frase inteira como título para leitor de tela", () => {
+    render(<App config={altConfig} />);
+    expect(screen.getByRole("heading", { level: 2, name: c.manifesto!.frase })).toBeInTheDocument();
+    expect(screen.getByText(c.manifesto!.assinatura!)).toBeInTheDocument();
+  });
+
+  it("seção nova desativada ou sem conteúdo some sem quebrar", () => {
+    const cfg = clone(altConfig);
+    cfg.conteudo.manifesto = undefined;
+    cfg.conteudo.carteirinha = undefined;
+    const { container } = render(<App config={cfg} />);
+    expect(container.querySelector("#manifesto")).toBeNull();
+    expect(container.querySelector("#carteirinha")).toBeNull();
+    expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
   });
 });

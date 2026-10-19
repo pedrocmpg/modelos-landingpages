@@ -1,5 +1,5 @@
 .titulo-secao {
-  max-width: 720px;
+  max-width: 760px;
 }
 
 .titulo-secao--centro {
@@ -10,23 +10,40 @@
 .titulo-secao__mascara {
   overflow: hidden;
   /* Folga para as descendentes (g, p, q) não serem cortadas pela máscara. */
-  padding-bottom: 0.18em;
-  margin-bottom: -0.18em;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 
 .titulo-secao h2 {
-  font-size: clamp(28px, 4.4vw, 42px);
-  line-height: 1.12;
+  font-size: clamp(32px, 5vw, 68px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
 }
 
+/* A linha vira uma "argola" (plaquinha): traço com um círculo na ponta. */
 .titulo-secao__linha {
+  position: relative;
   display: block;
-  width: 64px;
+  width: 72px;
   height: 3px;
-  margin-top: 16px;
+  margin-top: 22px;
   border-radius: 3px;
-  background: var(--cor-primaria);
+  background: var(--cor-escuro);
   transform-origin: left center;
+}
+
+.titulo-secao__linha::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -10px;
+  width: 16px;
+  height: 16px;
+  border: 3px solid var(--cor-escuro);
+  border-radius: 50%;
+  background: var(--cor-primaria);
+  translate: 0 -50%;
 }
 
 .titulo-secao--centro .titulo-secao__linha {
@@ -35,9 +52,14 @@
 }
 
 .titulo-secao__intro {
-  margin-top: 18px;
-  font-size: 18px;
+  max-width: 520px;
+  margin-top: 22px;
+  font-size: clamp(17px, 1.8vw, 20px);
   color: var(--cor-texto-secundario);
+}
+
+.titulo-secao--centro .titulo-secao__intro {
+  margin-inline: auto;
 }
 
 .titulo-secao--escuro h2 {
@@ -48,6 +70,21 @@
   color: var(--cor-primaria);
 }
 
+.titulo-secao--escuro .titulo-secao__linha {
+  background: var(--cor-fundo);
+}
+
+.titulo-secao--escuro .titulo-secao__linha::after {
+  border-color: var(--cor-fundo);
+}
+
 .titulo-secao--escuro .titulo-secao__intro {
   color: var(--cor-texto-escuro-atenuado);
+}
+
+/* Colunas estreitas (título ao lado do conteúdo): a fonte larga precisa de menos corpo. */
+.diferenciais__titulo h2,
+.faq__layout > .titulo-secao h2,
+.carteirinha__texto h2 {
+  font-size: clamp(28px, 3.5vw, 50px);
 }

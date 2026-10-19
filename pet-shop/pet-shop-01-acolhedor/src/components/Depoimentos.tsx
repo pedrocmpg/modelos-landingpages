@@ -21,7 +21,6 @@ export function Depoimentos() {
           eyebrow={dados.eyebrow}
           titulo={dados.titulo}
           introducao={dados.introducao}
-          centralizado
           escuro
         />
 
@@ -48,7 +47,8 @@ export function Depoimentos() {
         <ul className="depoimentos__grade">
           {dados.itens.map((d, i) => (
             <Reveal key={d.autor} as="li" tipo={ENTRADAS[i % ENTRADAS.length]} atraso={(i % 3) * 0.08}>
-              <blockquote className="depoimento">
+              <blockquote className="depoimento" style={{ "--i": i } as React.CSSProperties}>
+                <span className="depoimento__furo" aria-hidden="true" />
                 <svg aria-hidden="true" width="32" height="24" viewBox="0 0 32 24" className="depoimento__aspas" focusable="false">
                   <path
                     d="M0 24V14.7C0 6.3 4.9 1 12.6 0l1 3.6C8.8 5 6.6 8 6.4 11.4h6.2V24H0Zm17.4 0V14.7C17.4 6.3 22.3 1 30 0l1 3.6c-4.8 1.4-7 4.4-7.2 7.8H30V24H17.4Z"

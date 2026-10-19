@@ -1,0 +1,18 @@
+.nome-gigante {
+  --fs: 12vw;
+  width: 100%;
+  overflow: clip;
+  font-family: var(--fonte-titulo);
+  font-size: var(--fs);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.82;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.nome-gigante__texto {
+  display: inline-block;
+  font-size: var(--fs);
+  padding-bottom: 0.14em;
+}

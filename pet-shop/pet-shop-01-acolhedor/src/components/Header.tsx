@@ -5,7 +5,7 @@ import { whatsappUrl } from "../config/links.ts";
 import { pausarRolagem, retomarRolagem } from "../lib/scroll.ts";
 import { EASE, useMovimento } from "../motion/tokens.ts";
 import { GlifoFechar, GlifoMenu } from "./Glifos.tsx";
-import { Icone } from "./Icone.tsx";
+import { MarcaPlaquinha } from "./Marca.tsx";
 import "./Header.css";
 
 export function Header() {
@@ -49,13 +49,13 @@ export function Header() {
       data-rolou={rolou || menuAberto ? "" : undefined}
       initial={m.observador ? { y: "-100%" } : false}
       animate={{ y: 0 }}
-      transition={{ duration: m.dur(0.7), ease: EASE.enter }}
+      transition={{ duration: m.dur(0.7), ease: EASE.enter, delay: m.abertura }}
     >
       <div className="header__fundo" aria-hidden="true" />
       <div className="container header__barra">
         <a href="#hero" className="header__marca" onClick={fechar}>
           <span className="header__logo">
-            <Icone id="pata" tamanho={28} />
+            <MarcaPlaquinha tamanho={30} />
           </span>
           <span className="header__nome">{negocio.nome}</span>
         </a>
@@ -70,7 +70,7 @@ export function Header() {
             href={whatsappUrl(contato)}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn--primario btn--brilho header__cta"
+            className="btn btn--escuro btn--brilho header__cta"
           >
             {rotulos.agendar}
           </a>

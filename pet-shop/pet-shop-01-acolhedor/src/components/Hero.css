@@ -1,33 +1,43 @@
 .hero {
-  padding-top: calc(var(--altura-header) + clamp(20px, 5vw, 56px));
-  padding-bottom: clamp(40px, 6vw, 96px);
+  padding-top: calc(var(--altura-header) + clamp(16px, 4vw, 48px));
+  padding-bottom: 0;
   scroll-margin-top: 0;
+  background: var(--cor-primaria);
+  color: var(--cor-texto);
+  overflow-x: clip;
 }
 
 .hero__grade {
+  position: relative;
+  z-index: 2;
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: clamp(32px, 5vw, 64px);
-  align-items: center;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: end;
+}
+
+.hero__texto {
+  padding-bottom: clamp(32px, 6vw, 96px);
 }
 
 .hero__selo {
   display: inline-block;
   margin-bottom: 22px;
   padding: 8px 16px;
+  border: 1.5px solid currentColor;
   border-radius: 999px;
-  background: var(--cor-superficie);
-  color: var(--cor-secundaria);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-family: var(--fonte-destaque);
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .hero__titulo {
-  margin-bottom: 22px;
-  font-size: clamp(34px, 5.2vw, 56px);
-  line-height: 1.18;
+  margin-bottom: 24px;
+  font-size: clamp(34px, 5.1vw, 78px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
 /* Cada palavra sobe de dentro de uma máscara. */
@@ -35,8 +45,8 @@
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
-  padding-bottom: 0.2em;
-  margin-bottom: -0.2em;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
 }
 
 .hero__palavra-interna {
@@ -44,113 +54,213 @@
 }
 
 .hero__subtitulo {
-  max-width: 480px;
-  margin-bottom: 30px;
-  color: var(--cor-texto-secundario);
-  font-size: clamp(16px, 2.2vw, 18px);
+  max-width: 460px;
+  margin-bottom: 32px;
+  font-size: clamp(17px, 2vw, 20px);
+  font-weight: 500;
 }
 
 .hero__acoes {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-bottom: 26px;
-}
-
-.hero__nota {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 10px;
-  font-weight: 600;
-}
-
-.hero__estrelas {
-  color: var(--cor-destaque);
-  font-size: 18px;
-  letter-spacing: 0.04em;
 }
 
 .hero__visual {
   position: relative;
+  z-index: 3;
   width: 100%;
-  max-width: 480px;
+  max-width: 470px;
   margin-inline: auto;
+  /* O arco desce sobre o nome gigante. */
+  margin-bottom: clamp(-96px, -7vw, -32px);
 }
 
-.hero__mancha-paralaxe {
-  position: absolute;
-  top: -10%;
-  right: -8%;
-  width: 72%;
-  aspect-ratio: 1;
-}
-
-.hero__mancha {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--cor-primaria) 40%, transparent);
-}
-
-.hero__foto {
+.hero__arco {
   position: relative;
 }
 
-.hero__anotacao {
+/* Janela em arco: o contorno da plaquinha. */
+.hero__foto.foto {
+  border-radius: 999px 999px var(--raio-cartao) var(--raio-cartao);
+  box-shadow: 0 30px 60px -28px color-mix(in srgb, var(--cor-escuro) 70%, transparent);
+}
+
+.hero__selo-giratorio {
   position: absolute;
-  left: -6%;
-  bottom: -5%;
+  left: clamp(-60px, -5vw, -24px);
+  bottom: 14%;
   z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: clamp(96px, 26vw, 122px);
+  display: grid;
+  place-items: center;
+  width: clamp(104px, 11vw, 148px);
   aspect-ratio: 1;
-  padding: 10px;
-  border: 3px solid var(--cor-fundo);
   border-radius: 50%;
-  background: var(--cor-secundaria);
-  color: var(--cor-fundo);
-  font-family: var(--fonte-destaque);
-  font-size: clamp(20px, 5vw, 25px);
-  font-weight: 700;
-  line-height: 1;
-  text-align: center;
+  background: var(--cor-fundo);
+  color: var(--cor-escuro);
   box-shadow: 0 16px 30px -12px var(--cor-sombra);
+}
+
+.texto-circulo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: gira 22s linear infinite;
+}
+
+.texto-circulo text {
+  fill: currentColor;
+  font-family: var(--fonte-destaque);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero__selo-pata {
+  display: grid;
+  place-items: center;
+  width: 38%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--cor-primaria);
+}
+
+/* Plaquinha pendurada: a nota do Google gravada na medalha. */
+.hero__pendurado {
+  position: absolute;
+  top: -34px;
+  right: clamp(-12px, -2vw, 8px);
+  z-index: 4;
+  width: clamp(138px, 14vw, 178px);
+}
+
+.hero__pendurado::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 2px;
+  height: 100vh;
+  background: var(--cor-escuro);
+  translate: -50% 0;
+}
+
+.hero__placa {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 34px 14px 20px;
+  border: 2.5px solid var(--cor-escuro);
+  border-radius: 999px 999px 36px 36px;
+  background: var(--cor-fundo);
+  color: var(--cor-escuro);
+  text-align: center;
+  box-shadow: 0 18px 28px -14px var(--cor-sombra);
+  transform-origin: 50% -2px;
+  animation: balanco 5.5s var(--ease-in-out) infinite;
+}
+
+.hero__placa-furo {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border: 2.5px solid var(--cor-escuro);
+  border-radius: 50%;
+  background: var(--cor-primaria);
+  translate: -50% 0;
+}
+
+.hero__placa-estrelas {
+  color: var(--cor-destaque);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+}
+
+.hero__placa-valor {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(40px, 4.4vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.hero__placa-rotulo {
+  font-family: var(--fonte-destaque);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.hero__placa .selo-exemplo {
+  margin-top: 6px;
+}
+
+.hero__nome {
+  position: relative;
+  z-index: 1;
+  padding-inline: var(--pad-container);
+  color: var(--cor-escuro);
+}
+
+@keyframes balanco {
+  0%,
+  100% {
+    rotate: 5deg;
+  }
+  50% {
+    rotate: -5deg;
+  }
+}
+
+@keyframes gira {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 1023px) {
   .hero__grade {
     grid-template-columns: 1fr;
-    gap: 44px;
+    gap: 36px;
   }
 
   .hero__texto {
-    text-align: center;
-  }
-
-  .hero__subtitulo {
-    margin-inline: auto;
-  }
-
-  .hero__acoes,
-  .hero__nota {
-    justify-content: center;
+    padding-bottom: 0;
   }
 
   .hero__visual {
-    max-width: 400px;
+    max-width: 380px;
+    margin-top: 28px;
+  }
+
+  .hero__pendurado {
+    right: -6px;
+  }
+
+  /* No celular o fio cruzaria o texto: fica só a medalha. */
+  .hero__pendurado::before {
+    display: none;
   }
 }
 
 @media (max-width: 600px) {
-  .hero__anotacao {
-    left: 0;
-    bottom: -4%;
-  }
-
   .hero__acoes .btn {
     width: 100%;
+  }
+
+  .hero__selo-giratorio {
+    left: -10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__placa {
+    rotate: 0deg;
   }
 }

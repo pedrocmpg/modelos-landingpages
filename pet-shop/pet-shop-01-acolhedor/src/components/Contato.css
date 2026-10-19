@@ -28,14 +28,16 @@
 
 .contato__lista dt {
   color: var(--cor-secundaria);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-family: var(--fonte-destaque);
+  font-size: 12px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .contato__lista dd {
   margin-top: 4px;
+  font-size: clamp(17px, 1.8vw, 20px);
+  font-weight: 500;
 }
 
 .contato__link {
@@ -56,6 +58,11 @@
   gap: 10px;
   min-height: 44px;
   font-weight: 600;
+}
+
+.contato__mapa.cartao {
+  border: 2.5px solid var(--cor-escuro);
+  box-shadow: 10px 10px 0 var(--cor-escuro);
 }
 
 .contato__mapa {
